@@ -18,6 +18,7 @@ type Routes struct {
 	Root     *mux.Router // ''
 	APIRoot  *mux.Router // 'api/v4'
 	APIRoot5 *mux.Router // 'api/v5'
+	Bos      *mux.Router //'api/v4/bos'   // OXZION CHANGES
 
 	Users          *mux.Router // 'api/v4/users'
 	User           *mux.Router // 'api/v4/users/{user_id:[A-Za-z0-9]+}'
@@ -162,6 +163,7 @@ func Init(srv *app.Server) (*API, error) {
 	api.BaseRoutes.Root = srv.Router
 	api.BaseRoutes.APIRoot = srv.Router.PathPrefix(model.APIURLSuffix).Subrouter()
 	api.BaseRoutes.APIRoot5 = srv.Router.PathPrefix(model.APIURLSuffixV5).Subrouter()
+	api.BaseRoutes.Bos = api.BaseRoutes.APIRoot.PathPrefix("/bos").Subrouter() // OXZION CHANGES
 
 	api.BaseRoutes.Users = api.BaseRoutes.APIRoot.PathPrefix("/users").Subrouter()
 	api.BaseRoutes.User = api.BaseRoutes.APIRoot.PathPrefix("/users/{user_id:[A-Za-z0-9]+}").Subrouter()
@@ -278,7 +280,7 @@ func Init(srv *app.Server) (*API, error) {
 
 	api.BaseRoutes.OutgoingOAuthConnections = api.BaseRoutes.APIRoot.PathPrefix("/oauth/outgoing_connections").Subrouter()
 	api.BaseRoutes.OutgoingOAuthConnection = api.BaseRoutes.APIRoot.PathPrefix("/oauth/outgoing_connections/{outgoing_oauth_connection_id:[A-Za-z0-9]+}").Subrouter()
-
+	api.InitBos() // OXZION CHANGES
 	api.InitUser()
 	api.InitBot()
 	api.InitTeam()
@@ -342,6 +344,7 @@ func InitLocal(srv *app.Server) *API {
 
 	api.BaseRoutes.Root = srv.LocalRouter
 	api.BaseRoutes.APIRoot = srv.LocalRouter.PathPrefix(model.APIURLSuffix).Subrouter()
+	api.BaseRoutes.Bos = api.BaseRoutes.APIRoot.PathPrefix("/bos").Subrouter() // OXZION CHANGES
 
 	api.BaseRoutes.Users = api.BaseRoutes.APIRoot.PathPrefix("/users").Subrouter()
 	api.BaseRoutes.User = api.BaseRoutes.Users.PathPrefix("/{user_id:[A-Za-z0-9]+}").Subrouter()

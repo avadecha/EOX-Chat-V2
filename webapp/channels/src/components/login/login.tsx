@@ -59,6 +59,8 @@ import type {GlobalState} from 'types/store';
 import LoginMfa from './login_mfa';
 
 import './login.scss';
+import {getSiteURL} from "../../utils/url";
+import md5 from "md5";
 
 const MOBILE_SCREEN_WIDTH = 1200;
 
@@ -100,6 +102,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
         ExperimentalPrimaryTeam,
         ForgotPasswordLink,
         PasswordEnableForgotLink,
+        SiteURL
     } = useSelector(getConfig);
     const {IsLicensed} = useSelector(getLicense);
     const initializing = useSelector((state: GlobalState) => state.requests.users.logout.status === RequestStatus.SUCCESS || !state.storage.initialized);
@@ -145,9 +148,9 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
 
     const query = new URLSearchParams(search);
     const redirectTo = query.get('redirect_to');
-
+    const chatBosLoginUrl = getSiteURL() + '/api/v4/bos/login'
     const [desktopLoginLink, setDesktopLoginLink] = useState('');
-
+    var oxauth = '';
     const getExternalLoginOptions = () => {
         const externalLoginOptions: ExternalLoginButtonType[] = [];
 
@@ -398,6 +401,52 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
     }, [onCustomizeHeader, search, showMfa, isMobileView, getAlternateLink]);
 
     useEffect(() => {
+        console.log("Im here")
+        let loginId = '';
+        // OXZION CHANGES START
+        // OXZION CHANGES END
+
+        // OXZION CHANGES END
+        if(query.get('oxauth')){
+            console.log('oxauth found')
+            // @ts-ignore
+            oxauth = query.get('oxauth');
+
+            onDismissSessionExpired();
+            const headers: HeadersInit = {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json',
+                'AccessControlAllowOrigin' : "*",
+                'AccessControlAllowCredentials' : 'true' ,
+            };
+            fetch(chatBosLoginUrl, {
+                method: 'POST',
+                headers: headers,
+                body:JSON.stringify({token:oxauth})
+            }) .then(res => {
+                console.log(res);
+
+                if (res.ok) {
+                    res.json().then(json => {
+                        console.log(json);
+                        if(json.username){
+                            console.log(md5(json.username));
+                            const submitOptions = {
+                                loginId: json.username,
+                                password: md5(json.username)
+                            }
+                            submit(submitOptions);
+                        }
+                    });
+
+                } else {
+                    console.log("Response Failed....");
+                }
+            })
+            .catch((err)=>{
+                console.log(err)
+            })
+        }
         // We don't want to redirect outside of this route if we're doing Desktop App auth
         if (query.get('server_token')) {
             return;
@@ -489,7 +538,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
     const preSubmit = (e: React.MouseEvent | React.KeyboardEvent) => {
         e.preventDefault();
         setIsWaiting(true);
-
+        console.log("Im here waiting");
         // Discard any session expiry notice once the user interacts with the login page.
         onDismissSessionExpired();
 

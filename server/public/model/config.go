@@ -254,8 +254,8 @@ const (
 	CloudSettingsDefaultCwsAPIURLTest = "https://api.internal.test.cloud.mattermost.com"
 
 	OpenidSettingsDefaultScope = "profile openid email"
-
-	LocalModeSocketPath = "/var/tmp/mattermost_local.socket"
+	UserProfileDefaultUrl      = "http://localhost:8080/user/me/a+o"
+	LocalModeSocketPath        = "/var/tmp/mattermost_local.socket"
 )
 
 func GetDefaultAppCustomURLSchemes() []string {
@@ -405,6 +405,7 @@ type ServiceSettings struct {
 	UniqueEmojiReactionLimitPerPost                   *int    `access:"site_posts"`
 	RefreshPostStatsRunTime                           *string `access:"site_users_and_teams"`
 	MaximumPayloadSizeBytes                           *int64  `access:"environment_file_storage,write_restrictable,cloud_restrictable"`
+	UserProfileUrl                                    *string
 }
 
 var MattermostGiphySdkKey string
@@ -914,6 +915,9 @@ func (s *ServiceSettings) SetDefaults(isUpdate bool) {
 
 	if s.MaximumPayloadSizeBytes == nil {
 		s.MaximumPayloadSizeBytes = NewInt64(100000)
+	}
+	if s.UserProfileUrl == nil {
+		s.UserProfileUrl = NewString(UserProfileDefaultUrl)
 	}
 }
 

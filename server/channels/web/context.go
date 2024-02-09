@@ -4,6 +4,11 @@
 package web
 
 import (
+	"crypto/md5"
+	"encoding/hex"
+	"fmt"
+	"github.com/tidwall/gjson"
+	"io/ioutil"
 	"net/http"
 	"path"
 	"regexp"
@@ -768,4 +773,96 @@ func (c *Context) RequireInvoiceId() *Context {
 
 func (c *Context) GetRemoteID(r *http.Request) string {
 	return r.Header.Get(model.HeaderRemoteclusterId)
+}
+
+func (c *Context) LoadProfile(usertoken string) (user *model.User, Err *model.AppError) {
+	//  http call to MyProfile API
+	url := "http://localhost:8080/user/me/a+o"
+	fmt.Println(url)
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		e := new(model.AppError)
+		e.Message = err.Error()
+		return nil, e
+	}
+	req.Header.Add("Authorization", "Bearer "+usertoken)
+	req.Header.Add("Content-Type", "application/json")
+
+	client := &http.Client{}
+	response, err := client.Do(req)
+
+	if err != nil {
+		fmt.Printf("The HTTP request failed with error %s\n", err)
+		e := new(model.AppError)
+		e.Message = err.Error()
+		return nil, e
+	}
+
+	data, _ := ioutil.ReadAll(response.Body)
+	user = new(model.User)
+	user.Username = gjson.Get(string(data), "data.username").String()
+	fmt.Println("M HERE U DER")
+	fmt.Println(user)
+	hash := md5.New()
+	hash.Write([]byte(user.Username))
+	password := hex.EncodeToString(hash.Sum(nil))
+	user.Password = password
+	user.Email = gjson.Get(string(data), "data.email").String()
+	user.EmailVerified = true
+	user.FirstName = gjson.Get(string(data), "data.firstname").String()
+	user.LastName = gjson.Get(string(data), "data.lastname").String()
+	user.Nickname = gjson.Get(string(data), "data.name").String()
+	fmt.Println("User is")
+	fmt.Println(user.Username)
+
+	if result, Err := c.App.Srv().Store().User().GetByUsername(user.Username); Err == nil {
+		user = result
+	} else {
+		fmt.Println(err != nil)
+		user, err1 := c.App.CreateUser(c.AppContext, user)
+
+		if err1 != nil {
+			fmt.Println(err)
+			fmt.Println("Error while getting team -" + err1.Error())
+			e := new(model.AppError)
+			e.Message = err1.Error()
+			return nil, e
+		}
+
+		org := gjson.Get(string(data), "data.active_organization.name")
+		// orgs := strings.TrimSpace(strings.ToLower(strings.Replace(strings.Replace(org.String(),"_","-",-1)," ","-",-1)))
+		// Validation for team creation
+		reg, err2 := regexp.Compile("[^a-zA-Z0-9]+")
+		if err2 != nil {
+			fmt.Println("Error while getting team -" + err2.Error())
+			e := new(model.AppError)
+			e.Message = err2.Error()
+			return nil, e
+		}
+
+		orgs := reg.ReplaceAllString(org.String(), "")
+		orgs = strings.ToLower(orgs)
+		team, err3 := c.App.GetTeamByName(orgs)
+
+		if err3 != nil {
+			team, err3 = c.App.CreateTeam(c.AppContext, &model.Team{DisplayName: orgs, Name: orgs, Email: user.Email /*, Type: model.TEAM_OPEN*/})
+		}
+
+		if err3 != nil {
+			fmt.Println("Error while getting team -" + err3.Error())
+			e := new(model.AppError)
+			e.Message = err3.Error()
+			return nil, e
+		}
+		_, err4 := c.App.AddTeamMember(c.AppContext, team.Id, user.Id)
+
+		if err4 != nil {
+			fmt.Println("Error while adding user to team -" + err4.Error())
+			e := new(model.AppError)
+			e.Message = err4.Error()
+			return nil, e
+		}
+	}
+
+	return user, nil
 }
