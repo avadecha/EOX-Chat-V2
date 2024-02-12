@@ -819,6 +819,18 @@ func (c *Context) LoadProfile(usertoken string) (user *model.User, Err *model.Ap
 		user = result
 		fmt.Println("User found not creating")
 
+	} else {
+		fmt.Println(err != nil)
+		user, err1 := c.App.CreateUser(c.AppContext, user)
+
+		if err1 != nil {
+			fmt.Println(err)
+			fmt.Println("Error while creating user -" + err1.Error())
+			e := new(model.AppError)
+			e.Message = err1.Error()
+			return nil, e
+		}
+
 		org := gjson.Get(string(data), "data.active_account.name")
 		fmt.Println("data is")
 		fmt.Println(org)
@@ -855,53 +867,7 @@ func (c *Context) LoadProfile(usertoken string) (user *model.User, Err *model.Ap
 			e.Message = err4.Error()
 			return nil, e
 		}
-	} else {
-		fmt.Println(err != nil)
-		user, err1 := c.App.CreateUser(c.AppContext, user)
 
-		if err1 != nil {
-			fmt.Println(err)
-			fmt.Println("Error while creating user -" + err1.Error())
-			e := new(model.AppError)
-			e.Message = err1.Error()
-			return nil, e
-		}
-
-		org := gjson.Get(string(data), "data.active_account.name")
-		fmt.Println("data is")
-		fmt.Println(org)
-		// orgs := strings.TrimSpace(strings.ToLower(strings.Replace(strings.Replace(org.String(),"_","-",-1)," ","-",-1)))
-		// Validation for team creation
-		reg, err2 := regexp.Compile("[^a-zA-Z0-9]+")
-		if err2 != nil {
-			fmt.Println("Error while getting team 1 -" + err2.Error())
-			e := new(model.AppError)
-			e.Message = err2.Error()
-			return nil, e
-		}
-
-		orgs := reg.ReplaceAllString(org.String(), "")
-		orgs = strings.ToLower(orgs)
-		team, err3 := c.App.GetTeamByName(orgs)
-
-		if err3 != nil {
-			team, err3 = c.App.CreateTeam(c.AppContext, &model.Team{DisplayName: orgs, Name: orgs, Email: user.Email /*, Type: model.TEAM_OPEN*/})
-		}
-
-		if err3 != nil {
-			fmt.Println("Error while getting team 2-" + err3.Error())
-			e := new(model.AppError)
-			e.Message = err3.Error()
-			return nil, e
-		}
-		_, err4 := c.App.AddTeamMember(c.AppContext, team.Id, user.Id)
-
-		if err4 != nil {
-			fmt.Println("Error while adding user to team -" + err4.Error())
-			e := new(model.AppError)
-			e.Message = err4.Error()
-			return nil, e
-		}
 	}
 
 	return user, nil
