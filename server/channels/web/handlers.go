@@ -293,7 +293,7 @@ func (h Handler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		h.checkCSRFToken(c, r, token, tokenLocation, session)
+		//h.checkCSRFToken(c, r, token, tokenLocation, session)
 	} else if token != "" && c.App.Channels().License().IsCloud() && tokenLocation == app.TokenLocationCloudHeader {
 		// Check to see if this provided token matches our CWS Token
 		session, err := c.App.GetCloudSession(token)
