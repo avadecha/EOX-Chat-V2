@@ -777,8 +777,10 @@ func (c *Context) GetRemoteID(r *http.Request) string {
 
 func (c *Context) LoadProfile(usertoken string) (user *model.User, Err *model.AppError) {
 	//  http call to MyProfile API
-	url := "http://localhost:8080/user/me/a+o"
+	url := *c.App.Config().ServiceSettings.UserProfileUrl
 	fmt.Println(url)
+	//url := "http://localhost:8080/user/me/a+o"
+	//fmt.Println(url)
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		e := new(model.AppError)

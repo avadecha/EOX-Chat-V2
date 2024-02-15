@@ -100,7 +100,7 @@ package-prep:
 	@# Remove any old files
 	rm -Rf $(DIST_ROOT)
 
-	@# Resource directories
+	@# Resource directoriesconfig
 	mkdir -p $(DIST_PATH)/config
 	cp -L config/README.md $(DIST_PATH)/config
 	OUTPUT_CONFIG=$(PWD)/$(DIST_PATH)/config/config.json go run ./scripts/config_generator

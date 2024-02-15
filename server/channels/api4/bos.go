@@ -14,6 +14,8 @@ func (api *API) InitBos() {
 }
 func getprofile(c *Context, w http.ResponseWriter, r *http.Request) {
 	props := model.MapFromJSON(r.Body)
+	fmt.Println("UserProfileURL")
+	fmt.Println(c.App.Config().ServiceSettings.UserProfileUrl)
 	fmt.Println("PROPS LoadProfile")
 	fmt.Println(props)
 	id := props["id"]
