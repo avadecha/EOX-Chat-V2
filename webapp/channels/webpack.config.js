@@ -13,6 +13,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const webpack = require('webpack');
 const {ModuleFederationPlugin} = require('webpack').container;
 const WebpackPwaManifest = require('webpack-pwa-manifest');
+const Dotenv = require('dotenv-webpack');
 
 // const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 
@@ -270,6 +271,7 @@ var config = {
         //     generateStatsFile: true,
         //     statsFilename: 'bundlestats.json',
         // }),
+        new Dotenv({path: '../.env'})
     ],
 };
 

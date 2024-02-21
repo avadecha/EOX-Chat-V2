@@ -106,31 +106,31 @@ class AdminNavbarDropdown extends React.PureComponent<Props> {
                     {teamToRender}
                     {switchTeams}
                 </Menu.Group>
-                <Menu.Group>
-                    <Menu.ItemExternalLink
-                        onClick={() => trackEvent('admin', 'click_administrators_guide')}
-                        url={adminGuideLink}
-                        text={formatMessage({id: 'admin.nav.administratorsGuide', defaultMessage: 'Administrator Guide'})}
-                    />
-                    <Menu.ItemExternalLink
-                        onClick={() => trackEvent('admin', 'click_administrators_forum')}
-                        url={'https://forum.mattermost.com/t/how-to-use-the-troubleshooting-forum/150'}
-                        text={formatMessage({id: 'admin.nav.troubleshootingForum', defaultMessage: 'Troubleshooting Forum'})}
-                    />
-                    {commercialSupport}
-                    <Menu.ItemToggleModalRedux
-                        onClick={() => trackEvent('admin', 'click_administrators_about')}
-                        modalId={ModalIdentifiers.ABOUT}
-                        dialogType={AboutBuildModal}
-                        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName || 'Mattermost'})}
-                    />
-                </Menu.Group>
-                <Menu.Group>
-                    <Menu.ItemAction
-                        onClick={this.handleLogout}
-                        text={formatMessage({id: 'navbar_dropdown.logout', defaultMessage: 'Log Out'})}
-                    />
-                </Menu.Group>
+                {/*<Menu.Group>*/}
+                {/*    <Menu.ItemExternalLink*/}
+                {/*        onClick={() => trackEvent('admin', 'click_administrators_guide')}*/}
+                {/*        url={adminGuideLink}*/}
+                {/*        text={formatMessage({id: 'admin.nav.administratorsGuide', defaultMessage: 'Administrator Guide'})}*/}
+                {/*    />*/}
+                {/*    <Menu.ItemExternalLink*/}
+                {/*        onClick={() => trackEvent('admin', 'click_administrators_forum')}*/}
+                {/*        url={'https://forum.mattermost.com/t/how-to-use-the-troubleshooting-forum/150'}*/}
+                {/*        text={formatMessage({id: 'admin.nav.troubleshootingForum', defaultMessage: 'Troubleshooting Forum'})}*/}
+                {/*    />*/}
+                {/*    {commercialSupport}*/}
+                {/*    <Menu.ItemToggleModalRedux*/}
+                {/*        onClick={() => trackEvent('admin', 'click_administrators_about')}*/}
+                {/*        modalId={ModalIdentifiers.ABOUT}*/}
+                {/*        dialogType={AboutBuildModal}*/}
+                {/*        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: siteName || 'Mattermost'})}*/}
+                {/*    />*/}
+                {/*</Menu.Group>*/}
+                {/*<Menu.Group>*/}
+                {/*    <Menu.ItemAction*/}
+                {/*        onClick={this.handleLogout}*/}
+                {/*        text={formatMessage({id: 'navbar_dropdown.logout', defaultMessage: 'Log Out'})}*/}
+                {/*    />*/}
+                {/*</Menu.Group>*/}
             </Menu>
         );
     }

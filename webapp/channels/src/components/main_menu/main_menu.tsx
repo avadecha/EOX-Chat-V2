@@ -197,15 +197,15 @@ export class MainMenu extends React.PureComponent<Props> {
                         />
                     </SystemPermissionGate>
                 </Menu.Group>
-                <Menu.Group>
-                    <SystemPermissionGate
-                        permissions={[Permissions.SYSCONSOLE_WRITE_ABOUT_EDITION_AND_LICENSE]}
-                    >
-                        <Menu.StartTrial
-                            id='startTrial'
-                        />
-                    </SystemPermissionGate>
-                </Menu.Group>
+                {/*<Menu.Group>*/}
+                {/*    <SystemPermissionGate*/}
+                {/*        permissions={[Permissions.SYSCONSOLE_WRITE_ABOUT_EDITION_AND_LICENSE]}*/}
+                {/*    >*/}
+                {/*        <Menu.StartTrial*/}
+                {/*            id='startTrial'*/}
+                {/*        />*/}
+                {/*    </SystemPermissionGate>*/}
+                {/*</Menu.Group>*/}
                 <Menu.Group>
                     <Menu.ItemAction
                         id='recentMentions'
@@ -352,40 +352,41 @@ export class MainMenu extends React.PureComponent<Props> {
                     />
                 </Menu.Group>
                 <Menu.Group>
-                    <Menu.ItemExternalLink
-                        id='helpLink'
-                        show={Boolean(this.props.helpLink)}
-                        url={this.props.helpLink}
-                        text={formatMessage({id: 'navbar_dropdown.help', defaultMessage: 'Help'})}
-                        icon={<i className='fa fa-question'/>}
-                    />
-                    <Menu.ItemExternalLink
-                        id='reportLink'
-                        show={Boolean(this.props.reportAProblemLink)}
-                        url={this.props.reportAProblemLink}
-                        text={formatMessage({id: 'navbar_dropdown.report', defaultMessage: 'Report a Problem'})}
-                        icon={<i className='fa fa-phone'/>}
-                    />
-                    <Menu.ItemExternalLink
-                        id='nativeAppLink'
-                        show={this.props.appDownloadLink && !UserAgent.isMobileApp()}
-                        url={safeAppDownloadLink}
-                        text={formatMessage({id: 'navbar_dropdown.nativeApps', defaultMessage: 'Download Apps'})}
-                        icon={<i className='fa fa-mobile'/>}
-                    />
-                    <Menu.ItemToggleModalRedux
-                        id='about'
-                        modalId={ModalIdentifiers.ABOUT}
-                        dialogType={AboutBuildModal}
-                        text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: this.props.siteName || 'Mattermost'})}
-                        icon={<i className='fa fa-info'/>}
-                    />
+                    {/*<Menu.ItemExternalLink*/}
+                    {/*    id='helpLink'*/}
+                    {/*    show={Boolean(this.props.helpLink)}*/}
+                    {/*    url={this.props.helpLink}*/}
+                    {/*    text={formatMessage({id: 'navbar_dropdown.help', defaultMessage: 'Help'})}*/}
+                    {/*    icon={<i className='fa fa-question'/>}*/}
+                    {/*/>*/}
+                    {/*<Menu.ItemExternalLink*/}
+                    {/*    id='reportLink'*/}
+                    {/*    show={Boolean(this.props.reportAProblemLink)}*/}
+                    {/*    url={this.props.reportAProblemLink}*/}
+                    {/*    text={formatMessage({id: 'navbar_dropdown.report', defaultMessage: 'Report a Problem'})}*/}
+                    {/*    icon={<i className='fa fa-phone'/>}*/}
+                    {/*/>*/}
+                    {/*<Menu.ItemExternalLink*/}
+                    {/*    id='nativeAppLink'*/}
+                    {/*    show={this.props.appDownloadLink && !UserAgent.isMobileApp()}*/}
+                    {/*    url={safeAppDownloadLink}*/}
+                    {/*    text={formatMessage({id: 'navbar_dropdown.nativeApps', defaultMessage: 'Download Apps'})}*/}
+                    {/*    icon={<i className='fa fa-mobile'/>}*/}
+                    {/*/>*/}
+                    {/*<Menu.ItemToggleModalRedux*/}
+                    {/*    id='about'*/}
+                    {/*    modalId={ModalIdentifiers.ABOUT}*/}
+                    {/*    dialogType={AboutBuildModal}*/}
+                    {/*    text={formatMessage({id: 'navbar_dropdown.about', defaultMessage: 'About {appTitle}'}, {appTitle: this.props.siteName || 'Mattermost'})}*/}
+                    {/*    icon={<i className='fa fa-info'/>}*/}
+                    {/*/>*/}
                 </Menu.Group>
                 <Menu.Group>
+                    {/*TODO TO REMOVE THIS AFTER TESTING*/}
                     <Menu.ItemAction
                         id='logout'
                         onClick={this.handleEmitUserLoggedOutEvent}
-                        text={formatMessage({id: 'navbar_dropdown.logout', defaultMessage: 'Log Out'})}
+                        text={formatMessage({id: 'navbar_dropdown.logout', defaultMessage: 'Log Out '})}
                         icon={<i className='fa fa-sign-out'/>}
                     />
                 </Menu.Group>

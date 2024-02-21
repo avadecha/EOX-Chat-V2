@@ -191,6 +191,7 @@ export default class Client4 {
     };
     userRoles = '';
     telemetryHandler?: TelemetryHandler;
+    profilePictureUrl: string | undefined = '';
 
     getUrl() {
         return this.url;
@@ -205,6 +206,10 @@ export default class Client4 {
 
     setUrl(url: string) {
         this.url = url;
+    }
+
+    setProfilePictureUrl(url: string|undefined){
+        this.profilePictureUrl = url;
     }
 
     setUserAgent(userAgent: string) {
@@ -946,7 +951,8 @@ export default class Client4 {
             params._ = lastPictureUpdate;
         }
 
-        return `${this.getUserRoute(userId)}/image${buildQueryString(params)}`;
+        // return `${this.getUserRoute(userId)}/image${buildQueryString(params)}`;
+        return `${this.profilePictureUrl}${userId}`;
     };
 
     getDefaultProfilePictureUrl = (userId: string) => {

@@ -28,7 +28,7 @@ const GroupUsersRow = ({
             <Avatar
                 username={username}
                 url={Client4.getProfilePictureUrl(
-                    userId,
+                    username,
                     lastPictureUpdate,
                 )}
                 size='lg'

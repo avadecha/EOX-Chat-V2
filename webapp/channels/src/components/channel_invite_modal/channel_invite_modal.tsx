@@ -38,7 +38,7 @@ const USERS_FROM_DMS = 10;
 const MAX_USERS = 25;
 
 type UserProfileValue = Value & UserProfile;
-
+const profileUrl = process.env.PROFILE_URL;
 type GroupValue = Value & Group;
 
 export type Props = {
@@ -397,7 +397,8 @@ export class ChannelInviteModal extends React.PureComponent<Props, State> {
                     onMouseMove={() => onMouseMove(option)}
                 >
                     <ProfilePicture
-                        src={Client4.getProfilePictureUrl(option.id, option.last_picture_update)}
+                        // src={Client4.getProfilePictureUrl(option.id, option.last_picture_update)}
+                        src={Client4.getProfilePictureUrl(option.username, option.last_picture_update)}
                         status={this.props.userStatuses[option.id]}
                         size='md'
                         username={option.username}

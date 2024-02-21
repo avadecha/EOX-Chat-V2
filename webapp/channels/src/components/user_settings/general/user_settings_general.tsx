@@ -1089,6 +1089,7 @@ export class UserSettingsGeneralTab extends React.Component<Props, State> {
                                 className='form-control'
                                 type='text'
                                 onChange={this.updateUsername}
+                                readOnly={true}
                                 value={this.state.username}
                                 autoCapitalize='off'
                                 onFocus={Utils.moveCursorToEnd}

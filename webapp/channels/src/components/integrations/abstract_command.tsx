@@ -491,25 +491,25 @@ export class AbstractCommand extends React.PureComponent<Props, State> {
                                         defaultMessage='Examples: client, employee, patient, weather'
                                     />
                                 </div>
-                                <div className='form__help'>
-                                    <FormattedMessage
-                                        id='add_command.trigger.helpReserved'
-                                        defaultMessage='Reserved: {link}'
-                                        values={{
-                                            link: (
-                                                <ExternalLink
-                                                    href={DeveloperLinks.CUSTOM_SLASH_COMMANDS}
-                                                    location='abstract_command'
-                                                >
-                                                    <FormattedMessage
-                                                        id='add_command.trigger.helpReservedLinkText'
-                                                        defaultMessage='See built-in slash commands'
-                                                    />
-                                                </ExternalLink>
-                                            ),
-                                        }}
-                                    />
-                                </div>
+                                {/*<div className='form__help'>*/}
+                                {/*    <FormattedMessage*/}
+                                {/*        id='add_command.trigger.helpReserved'*/}
+                                {/*        defaultMessage='Reserved: {link}'*/}
+                                {/*        values={{*/}
+                                {/*            link: (*/}
+                                {/*                <ExternalLink*/}
+                                {/*                    href={DeveloperLinks.CUSTOM_SLASH_COMMANDS}*/}
+                                {/*                    location='abstract_command'*/}
+                                {/*                >*/}
+                                {/*                    <FormattedMessage*/}
+                                {/*                        id='add_command.trigger.helpReservedLinkText'*/}
+                                {/*                        defaultMessage='See built-in slash commands'*/}
+                                {/*                    />*/}
+                                {/*                </ExternalLink>*/}
+                                {/*            ),*/}
+                                {/*        }}*/}
+                                {/*    />*/}
+                                {/*</div>*/}
                             </div>
                         </div>
                         <div className='form-group'>

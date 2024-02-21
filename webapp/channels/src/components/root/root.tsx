@@ -11,7 +11,7 @@ import {ServiceEnvironment} from '@mattermost/types/config';
 import type {UserProfile} from '@mattermost/types/users';
 
 import {setSystemEmojis} from 'mattermost-redux/actions/emojis';
-import {setUrl} from 'mattermost-redux/actions/general';
+import {setProfilePictureUrl, setUrl} from 'mattermost-redux/actions/general';
 import {Client4} from 'mattermost-redux/client';
 import {rudderAnalytics, RudderTelemetryHandler} from 'mattermost-redux/client/rudder';
 import {General} from 'mattermost-redux/constants';
@@ -176,6 +176,9 @@ export default class Root extends React.PureComponent<Props, State> {
 
         // Redux
         setUrl(getSiteURL());
+        console.log("Profile URL is")
+        console.log(process.env.PROFILE_URL);
+        setProfilePictureUrl(process.env.PROFILE_URL);
 
         // Disable auth header to enable CSRF check
         Client4.setAuthHeader = false;

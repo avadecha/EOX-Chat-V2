@@ -40,11 +40,11 @@ const FileUploadOverlay = (props: Props) => {
                             defaultMessage='Drop a file to upload it.'
                         />
                     </span>
-                    <img
-                        className='overlay__logo'
-                        src={overlayLogoImage}
-                        alt='Logo'
-                    />
+                    {/*<img*/}
+                    {/*    className='overlay__logo'*/}
+                    {/*    src={overlayLogoImage}*/}
+                    {/*    alt='Logo'*/}
+                    {/*/>*/}
                 </div>
             </div>
         </div>

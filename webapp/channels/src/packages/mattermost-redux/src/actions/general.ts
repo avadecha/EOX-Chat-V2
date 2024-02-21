@@ -65,6 +65,11 @@ export function setUrl(url: string) {
     return true;
 }
 
+export function setProfilePictureUrl(url: string|undefined) {
+    Client4.setProfilePictureUrl(url);
+    return true
+}
+
 export function setFirstAdminVisitMarketplaceStatus(): ActionFuncAsync {
     return async (dispatch) => {
         try {

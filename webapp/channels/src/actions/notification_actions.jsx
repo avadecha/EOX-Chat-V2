@@ -303,6 +303,7 @@ export function sendDesktopNotification(post, msgProps) {
         ({title, body, silent, soundName, url, notify} = hookResult.args);
 
         if (notify) {
+            window.mm.postMessage('Notify');
             dispatch(notifyMe(title, body, channel, teamId, silent, soundName, url));
 
             //Don't add extra sounds on native desktop clients

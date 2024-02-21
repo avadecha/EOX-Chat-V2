@@ -503,7 +503,12 @@ class AdvancedCreatePost extends React.PureComponent<Props, State> {
         this.focusTextbox(forceFocus);
 
         const isReaction = Utils.REACTION_PATTERN.exec(post.message);
-        if (post.message.indexOf('/') === 0 && !ignoreSlash) {
+        if(post.message.indexOf('/help') === 0){
+            // launch help app
+            // @ts-ignore
+            window.mm.postMessage('help');
+        }
+        else if (post.message.indexOf('/') === 0 && !ignoreSlash) {
             this.setState({message: '', postError: null});
             let args: CommandArgs = {
                 channel_id: channelId,

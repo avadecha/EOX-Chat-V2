@@ -19,12 +19,38 @@ import 'katex/dist/katex.min.css';
 
 import '@mattermost/compass-icons/css/compass-icons.css';
 import '@mattermost/components/dist/index.esm.css';
+import * as GlobalActions from 'actions/global_actions';
 
 declare global {
     interface Window {
         publicPath?: string;
     }
 }
+// @ts-ignore
+window.mm = null;
+try{
+    // @ts-ignore
+    const processId = parseInt(window.location.search.match(/pid=([^&]*)/)[1], 10);
+    // @ts-ignore
+    const wid = parseInt(window.location.search.match(/wid=([^&]*)/)[1], 10);
+
+    // @ts-ignore
+    window.mm = {postMessage : function(...args) {
+            // @ts-ignore
+            window.top.postMessage({
+                name: 'osjs/iframe:message',
+                params: [{
+                    pid: processId,
+                    wid: wid,
+                    args: Array.prototype.slice.call(args)
+                }]
+            }, '*');
+
+        }};
+}catch(err){
+    console.log("Not running within Oxzion - ignoring");
+}
+
 
 // This is for anything that needs to be done for ALL react components.
 // This runs before we start to render anything.
@@ -48,6 +74,30 @@ function preRenderSetup(callwhendone: () => void) {
         );
     };
     setCSRFFromCookie();
+
+    // @ts-ignore
+    if(window.mm){
+        // @ts-ignore
+        window.mm.postMessage('Ping');
+        window.addEventListener('message', (ev) => {
+            const message = ev.data || {};
+            let event = null;
+            let text = '';
+            switch (message) {
+                case 'logout':
+                    console.log("Case Logout");
+                    GlobalActions.emitUserLoggedOutEvent();
+                    break;
+                // Anything else will just be logged to console
+                default:
+                    event = new window.CustomEvent(message.method, {detail: message});
+                    window.dispatchEvent(event);
+                    console.warn('[Chat] sent', message);
+                    break;
+            }
+        });
+    }
+    // OXZION CHANGES END
     callwhendone();
 }
 

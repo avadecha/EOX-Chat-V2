@@ -43,7 +43,7 @@ const MultiSelectOption = React.forwardRef(({
             onMouseMove={() => onMouseMove(option)}
         >
             <ProfilePicture
-                src={Client4.getProfilePictureUrl(option.id, option.last_picture_update)}
+                src={Client4.getProfilePictureUrl(option.username, option.last_picture_update)}
                 status={userStatuses[option.id]}
                 size='md'
                 username={option.username}

@@ -32,7 +32,7 @@ export default class SidebarHeader extends React.PureComponent<Props> {
             profilePicture = (
                 <Avatar
                     username={me.username}
-                    url={Client4.getProfilePictureUrl(me.id, me.last_picture_update)}
+                    url={Client4.getProfilePictureUrl(me.username, me.last_picture_update)}
                     size='lg'
                 />
             );

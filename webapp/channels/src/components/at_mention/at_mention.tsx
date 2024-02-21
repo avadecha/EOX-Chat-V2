@@ -120,7 +120,7 @@ export const AtMention = (props: Props) => {
                 <ProfilePopover
                     className='user-profile-popover'
                     userId={user.id}
-                    src={Client4.getProfilePictureUrl(user.id, user.last_picture_update)}
+                    src={Client4.getProfilePictureUrl(user.username, user.last_picture_update)}
                     hide={hideOverlay}
                     channelId={props.channelId}
                 />
@@ -183,7 +183,7 @@ export const AtMention = (props: Props) => {
                         <ProfilePopover
                             className='user-profile-popover'
                             userId={groupUser.id}
-                            src={Client4.getProfilePictureUrl(groupUser.id, groupUser.last_picture_update)}
+                            src={Client4.getProfilePictureUrl(groupUser.username, groupUser.last_picture_update)}
                             channelId={props.channelId}
                             hide={hideGroupUserOverlay}
                             returnFocus={returnFocus}

@@ -15,6 +15,7 @@ import BotTag from 'components/widgets/tag/bot_tag';
 import GuestTag from 'components/widgets/tag/guest_tag';
 
 import {displayEntireNameForUser} from 'utils/utils';
+import user_name from "../../../profile_popover/profile_popover_name/user_name";
 
 type Props = {
     currentUserId: string;
@@ -59,7 +60,7 @@ export default function UserDetails(props: Props): JSX.Element {
     return (
         <>
             <ProfilePicture
-                src={Client4.getProfilePictureUrl(id, lastPictureUpdate)}
+                src={Client4.getProfilePictureUrl(option.username, lastPictureUpdate)}
                 status={!deleteAt && !isBot ? status : undefined}
                 size='md'
             />

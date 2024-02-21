@@ -41,7 +41,7 @@ function makeMapStateToProps() {
         const showCompleteYourProfileTour = step === TaskNameMapToSteps[OnboardingTasksName.COMPLETE_YOUR_PROFILE].STARTED;
         return {
             userId,
-            profilePicture: Client4.getProfilePictureUrl(userId, currentUser?.last_picture_update),
+            profilePicture: Client4.getProfilePictureUrl(currentUser.username, currentUser?.last_picture_update),
             autoResetPref: get(state, Preferences.CATEGORY_AUTO_RESET_MANUAL_STATUS, userId, ''),
             status: getStatusForUserId(state, userId),
             customStatus,
