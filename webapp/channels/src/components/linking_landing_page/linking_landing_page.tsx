@@ -128,8 +128,8 @@ export default class LinkingLandingPage extends PureComponent<Props, State> {
     };
 
     openMattermostApp = () => {
-        this.setPreference(LandingPreferenceTypes.MATTERMOSTAPP);
-        this.setState({redirectPage: true});
+        this.setPreference(LandingPreferenceTypes.BROWSER);
+        this.setState({redirectPage: false});
         window.location.href = this.state.nativeLocation;
     };
 

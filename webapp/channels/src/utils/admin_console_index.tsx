@@ -92,7 +92,7 @@ function extractTextFromSettings(settings: AdminDefinitionSetting[], intl: IntlS
 export function adminDefinitionsToUrlsAndTexts(adminDefinition: typeof AdminDefinition, intl: IntlShape) {
     const entries: Record<string, Array<string | string[]>> = {};
     const sections = [
-        adminDefinition.about,
+        // adminDefinition.about,
         adminDefinition.reporting,
         adminDefinition.user_management,
         adminDefinition.environment,

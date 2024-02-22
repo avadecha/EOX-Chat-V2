@@ -14,7 +14,12 @@
     "settings_schema": {
         "header": "",
         "footer": "",
-        "settings": []
+        "settings": [{
+            "key": "APIUrl",
+            "display_name": "Eox api url",
+            "type": "text",
+            "default": "http://localhost:8080/"
+        }]
     }
 }
 

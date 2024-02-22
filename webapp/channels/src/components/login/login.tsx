@@ -372,12 +372,13 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
             );
         }
         return (
-            <AlternateLinkLayout
-                className='login-body-alternate-link'
-                alternateLinkPath={'/access_problem'}
-                alternateLinkLabel={linkLabel}
-                onClick={handleClick}
-            />
+            <div></div>
+            // <AlternateLinkLayout
+            //     className='login-body-alternate-link'
+            //     alternateLinkPath={'/access_problem'}
+            //     alternateLinkLabel={linkLabel}
+            //     onClick={handleClick}
+            // />
         );
     }, [showSignup]);
 
@@ -887,7 +888,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                             tabIndex={0}
                         >
                             <p className='login-body-card-title'>
-                                {getCardTitle()}
+                                <a href="https://eos.eoxvantage.com">{getCardTitle()}</a>
                             </p>
                             {enableCustomBrand && getMessageSubtitle()}
                             {alertBanner && (
@@ -905,6 +906,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                                     }}
                                 >
                                     <div className='login-body-card-form'>
+                                        Will be removed after testing
                                         <Input
                                             ref={loginIdInput}
                                             name='loginId'

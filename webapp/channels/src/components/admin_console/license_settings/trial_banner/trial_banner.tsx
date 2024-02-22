@@ -373,27 +373,28 @@ const TrialBanner = ({
         );
     }
     return (
-        <AlertBanner
-            mode='info'
-            title={
-                <FormattedMessage
-                    id='licensingPage.infoBanner.startTrialTitle'
-                    defaultMessage='Free 30 day trial!'
-                />
-            }
-            message={
-                <div className='banner-start-trial'>
-                    <p className='license-trial-legal-terms'>
-                        {content}
-                    </p>
-                    <div className='trial'>
-                        {trialButton}
-                    </div>
-                    {upgradeTermsMessage}
-                    {gettingTrialErrorMsg}
-                </div>
-            }
-        />
+        <div></div>
+        // <AlertBanner
+        //     mode='info'
+        //     title={
+        //         <FormattedMessage
+        //             id='licensingPage.infoBanner.startTrialTitle'
+        //             defaultMessage='Free 30 day trial!'
+        //         />
+        //     }
+        //     message={
+        //         <div className='banner-start-trial'>
+        //             <p className='license-trial-legal-terms'>
+        //                 {content}
+        //             </p>
+        //             <div className='trial'>
+        //                 {trialButton}
+        //             </div>
+        //             {upgradeTermsMessage}
+        //             {gettingTrialErrorMsg}
+        //         </div>
+        //     }
+        // />
     );
 };
 
