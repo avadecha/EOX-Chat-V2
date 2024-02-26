@@ -41,10 +41,18 @@ USER mattermost
 HEALTHCHECK --interval=30s --timeout=10s \
   CMD curl -f http://localhost:8065/api/v4/system/ping || exit 1
 
+
+
 # Configure entrypoint and command
 #COPY --chown=mattermost:mattermost --chmod=765 entrypoint.sh /
 #ENTRYPOINT ["/entrypoint.sh"]
 WORKDIR /mattermost
+
+COPY installeoxplugins.sh /mattermost/installeoxplugins.sh
+#RUN chmod 777 /mattermost/installeoxplugins.sh
+#RUN mkdir -p /mattermost/eoxplugins
+#COPY eoxplugins/ /mattermost/eoxplugins/
+#CMD ["./installeoxplugins.sh"]
 CMD ["mattermost"]
 
 EXPOSE 8065 8067 8074 8075
