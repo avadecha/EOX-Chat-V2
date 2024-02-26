@@ -136,19 +136,23 @@ func (p *Plugin) handleAppBot(w http.ResponseWriter, r *http.Request) {
 	_, checkTableExists := db.Query(`SHOW TABLES LIKE 'PostFileHistory'`)
 	if checkTableExists != nil {
 		_, tableCreationErr := db.Exec(`CREATE TABLE IF NOT EXISTS PostFileHistory (
-				Id INT(20) NOT NULL PRIMARY KEY ,
-				PostId VARCHAR(26) NOT NULL ,
-				FileId VARCHAR(200) NOT NULL ,
-				UserId VARCHAR(26) NOT NULL	,
-				ChannelId VARCHAR(26) NOT NULL ,
-				BotUserName VARCHAR(64) NOT NULL
-		)` + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
+            Id SERIAL PRIMARY KEY,
+            PostId VARCHAR(26) NOT NULL,
+            FileId VARCHAR(200) NOT NULL,
+            UserId VARCHAR(26) NOT NULL,
+            ChannelId VARCHAR(26) NOT NULL,
+            BotUserName VARCHAR(64) NOT NULL
+    )`)
 		if tableCreationErr != nil {
 			p.API.LogError("failed to create PostFileHistory table" + tableCreationErr.Error())
 			return
 		}
 	} else {
-		checkColumnExists, _ := db.Query(`SELECT COUNT(*) as count FROM INFORMATION_SCHEMA.COLUMNS WHERE TABLE_NAME = 	'PostFileHistory' AND COLUMN_NAME = 'Id'`)
+		checkColumnExists, _ := db.Query(`SELECT COUNT(*) AS count
+									FROM information_schema.columns
+									WHERE table_name = 'PostFileHistory'
+									AND column_name = 'Id';
+								`)
 		if checkCount(checkColumnExists) == 0 {
 			_, err = db.Exec(`ALTER TABLE PostFileHistory DROP PRIMARY KEY`)
 			_, err = db.Exec(`ALTER TABLE PostFileHistory ADD Id INT(20) PRIMARY KEY AUTO_INCREMENT`)
@@ -156,11 +160,12 @@ func (p *Plugin) handleAppBot(w http.ResponseWriter, r *http.Request) {
 	}
 
 	_, commentTableCreationErr := db.Exec(`CREATE TABLE IF NOT EXISTS PostCommentHistory (
-			PostFileHistoryId INT(20) NOT NULL ,
- 		    PostId VARCHAR(26) NOT NULL ,
- 		    CommentId VARCHAR(200) NOT NULL	,
- 		    ParentPostId VARCHAR(26) NULL
- 		)` + "ENGINE=InnoDB DEFAULT CHARSET=utf8mb4")
+			PostFileHistoryId INT NOT NULL,
+			PostId VARCHAR(26) NOT NULL,
+			CommentId VARCHAR(200) NOT NULL,
+			ParentPostId VARCHAR(26),
+			CONSTRAINT pk_PostCommentHistory PRIMARY KEY (PostFileHistoryId, CommentId)
+		)`)
 	_, err = db.Exec(`ALTER TABLE PostFileHistory ADD FOREIGN KEY (PostFileHistoryId) REFERENCES PostFileHistory(Id)`)
 	_, err = db.Exec(`ALTER TABLE PostFileHistory ADD FOREIGN KEY (ParentPostId) REFERENCES PostCommentHistory(PostId)`)
 	if commentTableCreationErr != nil {
@@ -174,43 +179,54 @@ func (p *Plugin) handleAppBot(w http.ResponseWriter, r *http.Request) {
 		p.API.LogError("failed to find from user " + l.MessageFrom)
 		return
 	}
+	var botUserId, finalMessageBody string
+
 	botUser, bErr := p.API.GetUserByUsername(l.BotName)
 	fmt.Fprint(w, botUser)
 	if bErr != nil {
 		p.API.LogError("failed to find target user " + l.BotName)
-		return
-	} else {
-		var botUserId, finalMessageBody string
-		finalMessageBody = l.MessageBody
-		var newarray []string
-		botUserId = botUser.Id
-		// MessageToList Convertion from string to array with @ prepend
-		fmt.Println("MESSAGE TO------")
-		fmt.Println(l.MessagesTo)
-		toList := strings.Split(l.MessagesTo, ",")
-		for j := range toList {
-			chk := "@" + toList[j]
-			newarray = append(newarray, chk)
+		bot := &model.Bot{
+			Username:    l.BotName,
+			DisplayName: l.BotName,
 		}
-		if strings.Contains(l.MessageBody, "@") {
-			uff := strings.Trim(strings.Join(strings.Fields(fmt.Sprint(newarray)), " "), "[]")
-			fmt.Println(uff)
-			re := regexp.MustCompile("@(\\w+)?") // Reg Expression to match @.*
-			fmt.Println(re)
-			test := re.FindAllString(l.MessageBody, -1) // Check regExp in the MessageBody
-			fmt.Println("----FINAL TO LIST---", test)
-			for i := range test {
-				p.CreateMessage(test[i], botUserId, l.Title, l.UrlLink, l.Identifier, l.CommentId, l.BotName, finalMessageBody, fromUser, l.MessageFrom, db, l.FileIds)
-			}
-		} else {
-			newarray = remove(newarray, "@"+l.MessageFrom)
-			fmt.Println(newarray)
-			for i := range newarray {
-				p.CreateMessage(newarray[i], botUserId, l.Title, l.UrlLink, l.Identifier, l.CommentId, l.BotName, finalMessageBody, fromUser, l.MessageFrom, db, l.FileIds)
-			}
+		options := []plugin.EnsureBotOption{
+			plugin.ProfileImagePath("assets/icon.png"),
 		}
 
+		botUserId, _ = p.Helpers.EnsureBot(bot, options...)
+
+	} else {
+		botUserId = botUser.Id
 	}
+	finalMessageBody = l.MessageBody
+	var newarray []string
+
+	// MessageToList Convertion from string to array with @ prepend
+	fmt.Println("MESSAGE TO------")
+	fmt.Println(l.MessagesTo)
+	toList := strings.Split(l.MessagesTo, ",")
+	for j := range toList {
+		chk := "@" + toList[j]
+		newarray = append(newarray, chk)
+	}
+	if strings.Contains(l.MessageBody, "@") {
+		uff := strings.Trim(strings.Join(strings.Fields(fmt.Sprint(newarray)), " "), "[]")
+		fmt.Println(uff)
+		re := regexp.MustCompile("@(\\w+)?") // Reg Expression to match @.*
+		fmt.Println(re)
+		test := re.FindAllString(l.MessageBody, -1) // Check regExp in the MessageBody
+		fmt.Println("----FINAL TO LIST---", test)
+		for i := range test {
+			p.CreateMessage(test[i], botUserId, l.Title, l.UrlLink, l.Identifier, l.CommentId, l.BotName, finalMessageBody, fromUser, l.MessageFrom, db, l.FileIds)
+		}
+	} else {
+		newarray = remove(newarray, "@"+l.MessageFrom)
+		fmt.Println(newarray)
+		for i := range newarray {
+			p.CreateMessage(newarray[i], botUserId, l.Title, l.UrlLink, l.Identifier, l.CommentId, l.BotName, finalMessageBody, fromUser, l.MessageFrom, db, l.FileIds)
+		}
+	}
+
 }
 
 func (p *Plugin) handleDialog(w http.ResponseWriter, req *http.Request) {
@@ -937,7 +953,7 @@ func (p *Plugin) HandleMsgOnUpdate(newPost, oldPost *model.Post) {
 					"senderId":  {newPost.UserId},
 					"CommentId": {CommentId},
 				}
-				url := eoxAPIUrl + "callback/chat/postfilecomment/" + CommentId
+				url := "callback/chat/postfilecomment/" + CommentId
 				fmt.Println("Attachment URL---", url)
 				req, errs := http.PostForm(url, jsonStr)
 				if errs != nil {
@@ -1061,7 +1077,8 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 		}
 		var PostId string
 		var BotUserName string
-		err = db.QueryRow("select PostId,BotUserName from PostFileHistory where ChannelId = ?", post.ChannelId).Scan(&PostId, &BotUserName)
+		err = db.QueryRow("select PostId,BotUserName from PostFileHistory where ChannelId = $1", post.ChannelId).Scan(&PostId, &BotUserName)
+		p.API.LogError(fmt.Sprintf("%v", err))
 		if err == sql.ErrNoRows {
 			fmt.Println("Non Bot Channels")
 			return
@@ -1069,7 +1086,7 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 			if post.RootId != "" {
 				fmt.Println("Here bz RootID not null")
 				var NonThreadPostChannelId string
-				err = db.QueryRow("select ChannelId from PostFileHistory where PostId = ?", post.RootId).Scan(&NonThreadPostChannelId)
+				err = db.QueryRow("select ChannelId from PostFileHistory where PostId = $1", post.RootId).Scan(&NonThreadPostChannelId)
 				fmt.Println("NonThreadPostChannelId-------", NonThreadPostChannelId)
 				if err == sql.ErrNoRows {
 					fmt.Println("NO Rows NonThreadPostChannelId---------- ")
@@ -1096,20 +1113,21 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 			} else {
 				var FileIds, UseCommentId, FileId, UsePostId, UseFileHistoryId string
 				fmt.Println("hrereeeeeeeeee--")
-				fileAttachment := db.QueryRow("select FileIds FROM Posts WHERE Id = ?", post.Id).Scan(&FileIds)
+				fmt.Println(post.Id)
+				fileAttachment := db.QueryRow("select FileIds FROM Posts WHERE Id = $1", post.Id).Scan(&FileIds)
 				fmt.Println("File Attachments---", fileAttachment)
 				fmt.Println(FileIds)
-				err = db.QueryRow("select FileId from PostFileHistory where PostId = ?", post.RootId).Scan(&FileId)
+				err = db.QueryRow("select FileId from PostFileHistory where PostId = $1", post.RootId).Scan(&FileId)
 				fmt.Println("FileId---", FileId)
 				if err == sql.ErrNoRows {
 					fmt.Println("NO Rows Found For the Query")
 				}
-				err = db.QueryRow("select PostId, Id from PostFileHistory where FileId = ? AND UserId = ? ORDER BY Id DESC LIMIT ?", FileId, post.UserId, 1).Scan(&UsePostId, &UseFileHistoryId)
+				err = db.QueryRow("select PostId, Id from PostFileHistory where FileId = $1 AND UserId = $2 ORDER BY Id DESC LIMIT $3", FileId, post.UserId, 1).Scan(&UsePostId, &UseFileHistoryId)
 				fmt.Println("UsePostId NN---", UsePostId)
 				if err == sql.ErrNoRows {
 					fmt.Println("NO UsePostId Found")
 				}
-				err = db.QueryRow("select CommentId from PostCommentHistory where PostId = ?", UsePostId).Scan(&UseCommentId)
+				err = db.QueryRow("select CommentId from PostCommentHistory where PostId = $1", UsePostId).Scan(&UseCommentId)
 				fmt.Println("UseCommentId---", UseCommentId)
 				if err == sql.ErrNoRows {
 					fmt.Println("NO Rows--")
@@ -1135,7 +1153,9 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 					p.API.LogError("Post error" + errs.Error())
 				}
 				response, _ := ioutil.ReadAll(req.Body)
-				fmt.Println("RESPONSE---", string(response))
+				p.API.LogError("RESPONSE---")
+				p.API.LogError(string(response))
+				fmt.Println("im here after post")
 				jsonByteArray := []byte(`[` + string(response) + `]`)
 				var things []Check
 				errss := json.Unmarshal(jsonByteArray, &things)
@@ -1162,7 +1182,7 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 					// fmt.Println("BaseUrl-----", baseUrl)
 					for i, fileAttachmentId := range FileIdList {
 						fmt.Println(i, " => ", fileAttachmentId)
-						errs := db.QueryRow("select Name, Path, ThumbnailPath, PreviewPath from FileInfo where Id = ?", fileAttachmentId).Scan(&AttachmentName, &AttachmentPath, &AttachmentThumbnail, &AttachmentPreview)
+						errs := db.QueryRow("select Name, Path, ThumbnailPath, PreviewPath from FileInfo where Id = $1", fileAttachmentId).Scan(&AttachmentName, &AttachmentPath, &AttachmentThumbnail, &AttachmentPreview)
 						if errs == sql.ErrNoRows {
 							fmt.Println("NO FFF")
 						}
@@ -1220,7 +1240,7 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 				fmt.Println("UserId====", post.UserId)
 				fmt.Println("ChannelId====", post.ChannelId)
 				fmt.Println("BotUserName====", BotUserName)
-				res, err := db.Exec("INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES (?, ?, ?, ?, ?)", post.Id, things[0].Data.FileId, post.UserId, post.ChannelId, BotUserName)
+				res, err := db.Exec("INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES ($1, $2, $3, $4, $5)", post.Id, things[0].Data.FileId, post.UserId, post.ChannelId, BotUserName)
 				if err != nil {
 					fmt.Println("Unable to Insert-----")
 					fmt.Println(err)
@@ -1228,7 +1248,7 @@ func (p *Plugin) HandleMsgFromDebuggingChannel(post *model.Post) {
 				}
 				prdID, err := res.LastInsertId()
 				fmt.Println("---===", prdID)
-				_, err = db.Exec("INSERT INTO PostCommentHistory (PostFileHistoryId, PostId, CommentId, ParentPostId) VALUES (?, ?, ?, ?)", prdID, post.Id, things[0].Data.Uuid, post.RootId)
+				_, err = db.Exec("INSERT INTO PostCommentHistory (PostFileHistoryId, PostId, CommentId, ParentPostId) VALUES ($1, $2, $3, $4)", prdID, post.Id, things[0].Data.Uuid, post.RootId)
 			}
 		}
 	}
@@ -1291,16 +1311,17 @@ func (p *Plugin) CreateMessage(newarray string, botUserId string, title string, 
 		fmt.Println("M hereOkk")
 		fmt.Println(posted.Id)
 		fmt.Println(identifier)
+		p.API.LogInfo("Inserting into postfilehistory with query ", "INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES (?, ?, ?, ?, ?)", posted.Id, identifier, targetId, channel.Id, botName)
 		res, err := db.Exec("INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES (?, ?, ?, ?, ?)", posted.Id, identifier, targetId, channel.Id, botName)
 		if err != nil {
-			panic(err)
+			p.API.LogError(fmt.Sprintf("%v", err))
 		}
 		prdID, err := res.LastInsertId()
 		PostId = posted.Id
 		fmt.Println("---===", PostId)
 		_, err = db.Exec("INSERT INTO PostCommentHistory (PostFileHistoryId, PostId, CommentId, ParentPostId) VALUES (?, ?, ?, ?)", prdID, posted.Id, commentId, `NULL`)
 		if err != nil {
-			panic(err)
+			p.API.LogError(fmt.Sprintf("%v", err))
 		}
 	}
 	fileList := make([]string, 0)
@@ -1372,7 +1393,12 @@ func (p *Plugin) CreateMessage(newarray string, botUserId string, title string, 
 		p.API.LogError(fmt.Sprintf("%v", pErr))
 	}
 	fmt.Println(postsNew)
-	res, err := db.Exec("INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES (?, ?, ?, ?, ?)", postsNew.Id, identifier, targetId, channel.Id, botName)
+
+	formattedquery := fmt.Sprintf("INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES ('%s', '%s', '%s', '%s', '%s')",
+		postsNew.Id, identifier, targetId, channel.Id, botName)
+	p.API.LogInfo(formattedquery)
+	//res, err := db.Exec("INSERT INTO PostFileHistory (PostId, FileId, UserId, ChannelId, BotUserName) VALUES (?, ?, ?, ?, ?)", postsNew.Id, identifier, targetId, channel.Id, botName)
+	res, err := db.Exec(formattedquery)
 	if err != nil {
 		p.API.LogError("failed to insert into PostFileHistory " + err.Error())
 		return
@@ -1380,7 +1406,9 @@ func (p *Plugin) CreateMessage(newarray string, botUserId string, title string, 
 	}
 	prdID, err := res.LastInsertId()
 	fmt.Println("---===")
-	_, err = db.Exec("INSERT INTO PostCommentHistory (PostFileHistoryId, PostId, CommentId, ParentPostId) VALUES (?, ?, ?, ?)", prdID, postsNew.Id, commentId, PostId)
+	formattedquery = fmt.Sprintf("INSERT INTO PostCommentHistory (PostFileHistoryId, PostId, CommentId, ParentPostId) VALUES ('%d', '%s', '%s', '%s')", prdID, postsNew.Id, commentId, PostId)
+	p.API.LogInfo(formattedquery)
+	_, err = db.Exec(formattedquery)
 	if err != nil {
 		p.API.LogError("failed to insert into PostCommentHistory " + err.Error())
 		return

@@ -313,7 +313,7 @@ func (p *Plugin) Stop() {
 
 func (p *Plugin) runner() {
 	go func() {
-		<-time.NewTimer(time.Hour).C
+		<-time.NewTimer(time.Minute).C
 		if !p.running {
 			return
 		}
