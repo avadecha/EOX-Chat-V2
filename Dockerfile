@@ -35,7 +35,7 @@ RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
   && chown -R mattermost:mattermost /mattermost /mattermost/data /mattermost/plugins /mattermost/client/plugins
 
 # We should refrain from running as privileged user
-USER mattermost
+USER root
 
 #Healthcheck to make sure container is ready
 HEALTHCHECK --interval=30s --timeout=10s \
