@@ -34,7 +34,7 @@ RUN mkdir -p /mattermost/data /mattermost/plugins /mattermost/client/plugins \
   && chown -R mattermost:mattermost /mattermost /mattermost/data /mattermost/plugins /mattermost/client/plugins
 
 # We should refrain from running as privileged user
-USER root
+USER mattermost
 
 #Healthcheck to make sure container is ready
 HEALTHCHECK --interval=30s --timeout=10s \
@@ -43,16 +43,17 @@ HEALTHCHECK --interval=30s --timeout=10s \
 
 
 # Configure entrypoint and command
-#COPY --chown=mattermost:mattermost --chmod=765 entrypoint.sh /
-#ENTRYPOINT ["/entrypoint.sh"]
-WORKDIR /mattermost
-
+COPY --chown=mattermost:mattermost --chmod=765 entrypoint.sh /
 COPY installeoxplugins.sh /mattermost/installeoxplugins.sh
 #RUN chmod 777 /mattermost/installeoxplugins.sh
 #RUN mkdir -p /mattermost/eoxplugins
 COPY eoxplugins/ /mattermost/eoxplugins/
+
+ENTRYPOINT ["/entrypoint.sh"]
+WORKDIR /mattermost
+
 #CMD ["./installeoxplugins.sh"]
-CMD ["mattermost"]
+#CMD ["mattermost"]
 
 EXPOSE 8065 8067 8074 8075
 
