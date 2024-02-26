@@ -8,7 +8,6 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ENV PATH="/mattermost/bin:${PATH}"
 ARG PUID=2000
 ARG PGID=2000
-ARG MM_PACKAGE="https://releases.mattermost.com/9.4.2/mattermost-9.4.2-linux-amd64.tar.gz?src=docker"
 
 # # Install needed packages and indirect dependencies
 RUN apt-get update \
@@ -51,7 +50,7 @@ WORKDIR /mattermost
 COPY installeoxplugins.sh /mattermost/installeoxplugins.sh
 #RUN chmod 777 /mattermost/installeoxplugins.sh
 #RUN mkdir -p /mattermost/eoxplugins
-#COPY eoxplugins/ /mattermost/eoxplugins/
+COPY eoxplugins/ /mattermost/eoxplugins/
 #CMD ["./installeoxplugins.sh"]
 CMD ["mattermost"]
 
