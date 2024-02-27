@@ -135,7 +135,7 @@ export default class Renderer extends marked.Renderer {
 
     public link(href: string, title: string, text: string, isUrl = false) {
         let outHref = href;
-
+        let eoxapp = "";
         if (this.formattingOptions.unsafeLinks && mightTriggerExternalRequest(href, this.formattingOptions.siteURL)) {
             if (text === href) {
                 return text;
@@ -144,23 +144,40 @@ export default class Renderer extends marked.Renderer {
         }
 
         if (!href.startsWith('/')) {
-            const scheme = getScheme(href);
-            if (!scheme) {
-                outHref = `http://${outHref}`;
-            } else if (isUrl && this.formattingOptions.autolinkedUrlSchemes) {
-                const isValidUrl =
-          this.formattingOptions.autolinkedUrlSchemes.indexOf(
-              scheme.toLowerCase(),
-          ) !== -1;
+            if(href.indexOf('eoxapplication') >= 0){
+                outHref = '#';
+                let appName = href.match(/eoxapplication=&quot;(.*?)&quot;/);
+                let fileId = href.match(/file-id=&quot;(.*?)&quot;/);
+                console.log(appName);
+                console.log(fileId);
+                if(appName && fileId){
+                    console.log("Im here with appname and fileId")
+                    console.log(appName)
+                    console.log(fileId)
+                    eoxapp = `eoxapplication="${appName[1]}" file-id="${fileId[1]}"`;
+                }
+            }else {
+                const scheme = getScheme(href);
+                if (!scheme) {
+                    outHref = `http://${outHref}`;
+                } else if (isUrl && this.formattingOptions.autolinkedUrlSchemes) {
+                    const isValidUrl =
+                        this.formattingOptions.autolinkedUrlSchemes.indexOf(
+                            scheme.toLowerCase(),
+                        ) !== -1;
 
-                if (!isValidUrl) {
-                    return text;
+                    if (!isValidUrl) {
+                        return text;
+                    }
                 }
             }
         }
 
         if (!isUrlSafe(unescapeHtmlEntities(href))) {
             return text;
+        }
+        else{
+            console.log("Url is safe")
         }
 
         let output = '<a class="theme markdown__link';
@@ -174,8 +191,9 @@ export default class Renderer extends marked.Renderer {
             }
         }
 
-        output += `" href="${outHref}" rel="noreferrer"`;
 
+        output += `" href="${outHref}" rel="noreferrer" ${eoxapp}`;
+        console.log(output)
         const openInNewTab = shouldOpenInNewTab(outHref, this.formattingOptions.siteURL, this.formattingOptions.managedResourcePaths);
 
         if (openInNewTab || !this.formattingOptions.siteURL) {
@@ -193,7 +211,7 @@ export default class Renderer extends marked.Renderer {
 
         // remove any links added to the text by hashtag or mention parsing since they'll break this link
         output += '>' + text.replace(/<\/?a[^>]*>/g, '') + '</a>';
-
+        console.log(output)
         return output;
     }
 
