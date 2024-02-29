@@ -1,0 +1,21 @@
+Steps to execute migration
+
+1. Create a database on mysql local exactly named "mattermost" and load the data to be migrated
+2. In local instance of this repo change config.json to
+     "DriverName": "mysql",
+     "DataSource": "root:password@tcp(172.17.0.1:3306)/mattermost?charset=utf8mb4,utf8\u0026readTimeout=30s\u0026writeTimeout=30s",
+   and do
+       cd server
+       make run-server
+    this will migrate all the updated changes for the database since the older version
+    After completion do
+        make stop-server
+3. Now create a database on local postgres named exactly "mattermost"
+4. Change credentials in files migration.load and migration.sh
+5. Run ./migration.sh
+6. Check the migration.log
+7. Take a dump of the local postgres database and load it to the server required
+
+Note: We are executing all of this on local for the speed of the process
+Important: it is important to maintain the database name as mattermost or the migration will fail
+
