@@ -1927,14 +1927,25 @@ func login(c *Context, w http.ResponseWriter, r *http.Request) {
 	audit.AddEventParameter(auditRec, "device_id", deviceId)
 
 	c.LogAuditWithUserId(id, "attempt - login_id="+loginId)
+	isMobileDevice := utils.IsMobileRequest(r)
+	user := &model.User{}
+	err := &model.AppError{}
+	if isMobileDevice {
+		user, err = c.LoginToEOX(loginId, password)
+		if err != nil {
+			c.Err = err
+			return
+		}
+	} else {
+		user, err = c.App.AuthenticateUserForLogin(c.AppContext, id, loginId, password, mfaToken, "", ldapOnly)
+		if err != nil {
+			c.LogAuditWithUserId(id, "failure - login_id="+loginId)
+			c.Err = err
+			return
+		}
+		auditRec.AddEventResultState(user)
 
-	user, err := c.App.AuthenticateUserForLogin(c.AppContext, id, loginId, password, mfaToken, "", ldapOnly)
-	if err != nil {
-		c.LogAuditWithUserId(id, "failure - login_id="+loginId)
-		c.Err = err
-		return
 	}
-	auditRec.AddEventResultState(user)
 
 	if user.IsGuest() {
 		if c.App.Channels().License() == nil {
@@ -1954,7 +1965,8 @@ func login(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	c.LogAuditWithUserId(user.Id, "authenticated")
 
-	isMobileDevice := utils.IsMobileRequest(r)
+	isMobileDevice = utils.IsMobileRequest(r)
+
 	session, err := c.App.DoLogin(c.AppContext, w, r, user, deviceId, isMobileDevice, false, false)
 	if err != nil {
 		c.Err = err

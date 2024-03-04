@@ -4,11 +4,13 @@
 package web
 
 import (
+	"bytes"
 	"crypto/md5"
 	"encoding/hex"
 	"fmt"
 	"github.com/tidwall/gjson"
 	"io/ioutil"
+	"mime/multipart"
 	"net/http"
 	"path"
 	"regexp"
@@ -773,6 +775,44 @@ func (c *Context) RequireInvoiceId() *Context {
 
 func (c *Context) GetRemoteID(r *http.Request) string {
 	return r.Header.Get(model.HeaderRemoteclusterId)
+}
+
+func (c *Context) LoginToEOX(username string, password string) (updateduser *model.User, Err *model.AppError) {
+	url := *c.App.Config().ServiceSettings.EOSLoginUrl
+	payload := &bytes.Buffer{}
+	writer := multipart.NewWriter(payload)
+	_ = writer.WriteField("username", username)
+	_ = writer.WriteField("password", password)
+	err := writer.Close()
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	client := &http.Client{}
+	req, err := http.NewRequest("POST", url, payload)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	req.Header.Set("Content-Type", writer.FormDataContentType())
+	res, err := client.Do(req)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	defer res.Body.Close()
+	body, err := ioutil.ReadAll(res.Body)
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+	data := body
+	fmt.Println(string(data))
+	token := gjson.Get(string(data), "data.jwt").String()
+	fmt.Println(gjson.Get(string(data), "status").String())
+	fmt.Println("token is")
+	fmt.Println(token)
+	return c.LoadProfile(token)
 }
 
 func (c *Context) LoadProfile(usertoken string) (user *model.User, Err *model.AppError) {

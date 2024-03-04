@@ -407,6 +407,7 @@ type ServiceSettings struct {
 	RefreshPostStatsRunTime                           *string `access:"site_users_and_teams"`
 	MaximumPayloadSizeBytes                           *int64  `access:"environment_file_storage,write_restrictable,cloud_restrictable"`
 	UserProfileUrl                                    *string
+	EOSLoginUrl                                       *string
 	EOSApiUrl                                         *string
 }
 
