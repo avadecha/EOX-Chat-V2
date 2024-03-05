@@ -70,13 +70,15 @@ const FilePreviewModalInfo: React.FC<Props> = (props: Props) => {
         );
     }
 
+
+    // @ts-ignore
     return (
         <div className='file-preview-modal__info'>
             {
                 (props.post && Object.keys(props.post).length > 0) &&
                 <Avatar
                     size='lg'
-                    url={imageURLForUser(props.post.user_id, user?.last_picture_update)}
+                    url={imageURLForUser(user?.username, user?.last_picture_update)}
                     className='file-preview-modal__avatar'
                 />
             }

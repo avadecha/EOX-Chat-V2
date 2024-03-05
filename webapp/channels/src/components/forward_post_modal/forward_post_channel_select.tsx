@@ -67,7 +67,7 @@ const FormattedOption = (props: ChannelOption & {className: string; isSingleValu
     const status = useSelector((state: GlobalState) => getStatusForUserId(state, details.userId || ''));
     const teammate = useSelector((state: GlobalState) => getDirectTeammate(state, details.id));
     const team = useSelector((state: GlobalState) => getTeam(state, details.team_id));
-    const userImageUrl = user?.id && Utils.imageURLForUser(user.id, user.last_picture_update);
+    const userImageUrl = user?.id && Utils.imageURLForUser(user.username, user.last_picture_update);
     const isPartOfOnlyOneTeam = useSelector((state: GlobalState) => getMyTeams(state).length === 1);
 
     const channelIsArchived = details.delete_at > 0;

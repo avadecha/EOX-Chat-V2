@@ -272,7 +272,7 @@ export class MultiSelect<T extends Value> extends React.PureComponent<Props<T>, 
     );
 
     formatOptionLabel = (user: any) => {
-        const profileImg = imageURLForUser(user.id, user.last_picture_update);
+        const profileImg = imageURLForUser(user.username, user.last_picture_update);
 
         return (
             <>

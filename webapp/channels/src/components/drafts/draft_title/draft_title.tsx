@@ -70,7 +70,7 @@ function DraftTitle({
             <Avatar
                 size='xs'
                 username={teammate.username}
-                url={imageURLForUser(teammate.id, teammate.last_picture_update)}
+                url={imageURLForUser(teammate.username, teammate.last_picture_update)}
                 className='DraftTitle__avatar'
             />
         );

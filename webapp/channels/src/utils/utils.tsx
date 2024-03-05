@@ -1037,7 +1037,7 @@ export function displayFullAndNicknameForUser(user: UserProfile) {
     return displayName;
 }
 
-export function imageURLForUser(userId: UserProfile['id'], lastPictureUpdate = 0) {
+export function imageURLForUser(userId: UserProfile['username'] = "", lastPictureUpdate = 0) {
     return Client4.getProfilePictureUrl(userId, lastPictureUpdate);
 }
 

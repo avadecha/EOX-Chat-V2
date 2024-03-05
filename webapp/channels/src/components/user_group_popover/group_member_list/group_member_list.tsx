@@ -177,7 +177,7 @@ const GroupMemberList = (props: Props) => {
                         <Avatar
                             username={user.username}
                             size={'sm'}
-                            url={Utils.imageURLForUser(user?.id ?? '')}
+                            url={Utils.imageURLForUser(user?.username ?? '')}
                             className={'avatar-post-preview'}
                             tabIndex={-1}
                         />

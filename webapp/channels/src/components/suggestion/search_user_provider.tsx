@@ -49,7 +49,7 @@ const SearchUserSuggestion = React.forwardRef<HTMLDivElement, SuggestionProps<Us
             <Avatar
                 size='sm'
                 username={username}
-                url={Utils.imageURLForUser(item.id, item.last_picture_update)}
+                url={Utils.imageURLForUser(username, item.last_picture_update)}
             />
             <div className='suggestion-list__ellipsis'>
                 <span className='suggestion-list__main'>
