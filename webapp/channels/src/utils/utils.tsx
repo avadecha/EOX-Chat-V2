@@ -1038,7 +1038,7 @@ export function displayFullAndNicknameForUser(user: UserProfile) {
 }
 
 export function imageURLForUser(userId: UserProfile['id'], lastPictureUpdate = 0) {
-    return Client4.getUsersRoute() + '/' + userId + '/image?_=' + lastPictureUpdate;
+    return Client4.getProfilePictureUrl(userId, lastPictureUpdate);
 }
 
 export function defaultImageURLForUser(userId: UserProfile['id']) {

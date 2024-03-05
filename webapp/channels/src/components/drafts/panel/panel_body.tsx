@@ -19,6 +19,7 @@ import {imageURLForUser, handleFormattedTextClick} from 'utils/utils';
 import type {PostDraft} from 'types/store/draft';
 
 import './panel_body.scss';
+import {Client4} from "mattermost-redux/client";
 
 type Props = {
     channelId: string;
@@ -64,7 +65,7 @@ function PanelBody({
                     username={username}
                     userId={userId}
                     size={'md'}
-                    src={imageURLForUser(userId)}
+                    src={Client4.getProfilePictureUrl(username, 0)}
                 />
             </div>
             <div

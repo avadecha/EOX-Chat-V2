@@ -29,6 +29,7 @@ import * as Utils from 'utils/utils';
 
 import AddMembersButton from './add_members_button';
 import PluggableIntroButtons from './pluggable_intro_buttons';
+import {Client4} from "mattermost-redux/client";
 
 type Props = {
     currentUserId: string;
@@ -145,7 +146,7 @@ function createGMIntroMessage(channel: Channel, centeredIntro: string, profiles:
             map((profile) => (
                 <ProfilePicture
                     key={'introprofilepicture' + profile.id}
-                    src={Utils.imageURLForUser(profile.id, profile.last_picture_update)}
+                    src={Client4.getProfilePictureUrl(profile.username, 0)}
                     size='xl'
                     userId={profile.id}
                     username={profile.username}
