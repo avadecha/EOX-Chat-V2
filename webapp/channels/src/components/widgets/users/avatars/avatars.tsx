@@ -106,7 +106,7 @@ function UserAvatar({
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Avatar
-                        url={imageURLForUser(user.username, user?.last_picture_update)}
+                        url={imageURLForUser(user?.username, user?.last_picture_update)}
                         tabIndex={-1}
                         {...props}
                     />
