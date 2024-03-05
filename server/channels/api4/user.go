@@ -1928,9 +1928,16 @@ func login(c *Context, w http.ResponseWriter, r *http.Request) {
 
 	c.LogAuditWithUserId(id, "attempt - login_id="+loginId)
 	isMobileDevice := utils.IsMobileRequest(r)
+	isEOXMobile := utils.IsEOXMobileRequest(r)
+
 	user := &model.User{}
 	err := &model.AppError{}
-	if isMobileDevice {
+	if isMobileDevice && utils.IsExternalAppRequest(r) {
+		c.Err = model.NewAppError("AuthenticateUserForLogin", "Login Not Allowed", nil, "Login Not Allowed from this app", http.StatusBadRequest)
+		return
+	}
+	if isMobileDevice && isEOXMobile {
+
 		user, err = c.LoginToEOX(loginId, password)
 		if err != nil {
 			c.Err = err

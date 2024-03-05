@@ -79,7 +79,22 @@ function UserAvatar({
     const hideProfilePopover = () => {
         overlay.current?.hide();
     };
+    console.log("User is ");
+    console.log(user)
+    useEffect(() => {
+        console.log("Inside use effect")
+        // You can add any logic here that should be executed when the component mounts or when userId changes.
+        // For example, you might want to fetch user data based on userId.
+        // Make sure to handle any cleanup if necessary.
+        // Example:
+        // fetchData(userId);
 
+        // Clean-up logic example:
+        // return () => {
+        //     // Clean up any subscriptions, timers, or other resources here.
+        // };
+        console.log(user);
+    }, );
     return (
         <OverlayTrigger
             trigger='click'

@@ -226,6 +226,40 @@ func IsMobileRequest(r *http.Request) bool {
 	return false
 }
 
+func IsExternalAppRequest(r *http.Request) bool {
+	userAgent := r.UserAgent()
+	if userAgent == "" {
+		return false
+	}
+
+	// Check if the User-Agent contain keywords found in mobile devices running the mobile App
+	mobileKeywords := []string{"Mattermost"}
+	for _, keyword := range mobileKeywords {
+		if strings.Contains(userAgent, keyword) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func IsEOXMobileRequest(r *http.Request) bool {
+	userAgent := r.UserAgent()
+	if userAgent == "" {
+		return false
+	}
+
+	// Check if the User-Agent contain keywords found in mobile devices running the mobile App
+	mobileKeywords := []string{"EOXMobile"}
+	for _, keyword := range mobileKeywords {
+		if strings.Contains(userAgent, keyword) {
+			return true
+		}
+	}
+
+	return false
+}
+
 // RoundOffToZeroes converts all digits to 0 except the 1st one.
 // Special case: If there is only 1 digit, then returns 0.
 func RoundOffToZeroes(n float64) int64 {
