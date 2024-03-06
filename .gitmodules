@@ -1,0 +1,3 @@
+[submodule "pushproxy"]
+	path = pushproxy
+	url = git@github.com:mattermost/mattermost-push-proxy.git
