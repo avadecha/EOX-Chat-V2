@@ -226,23 +226,23 @@ export function SystemUsersListAction({user, currentUser, tableId, rowIndex, onE
                 }}
             />}
 
-            {!user.auth_service &&
-            <Menu.Item
-                id={`${menuItemIdPrefix}-resetPassword`}
-                labels={
-                    <FormattedMessage
-                        id='admin.system_users.list.actions.menu.resetPassword'
-                        defaultMessage='Reset password'
-                    />
-                }
-                onClick={() => {
-                    dispatch(openModal({
-                        modalId: ModalIdentifiers.RESET_PASSWORD_MODAL,
-                        dialogType: ResetPasswordModal,
-                        dialogProps: {user},
-                    }));
-                }}
-            />}
+            {/*{!user.auth_service &&*/}
+            {/*<Menu.Item*/}
+            {/*    id={`${menuItemIdPrefix}-resetPassword`}*/}
+            {/*    labels={*/}
+            {/*        <FormattedMessage*/}
+            {/*            id='admin.system_users.list.actions.menu.resetPassword'*/}
+            {/*            defaultMessage='Reset password'*/}
+            {/*        />*/}
+            {/*    }*/}
+            {/*    onClick={() => {*/}
+            {/*        dispatch(openModal({*/}
+            {/*            modalId: ModalIdentifiers.RESET_PASSWORD_MODAL,*/}
+            {/*            dialogType: ResetPasswordModal,*/}
+            {/*            dialogProps: {user},*/}
+            {/*        }));*/}
+            {/*    }}*/}
+            {/*/>}*/}
 
             {user.mfa_active && config.EnableMultifactorAuthentication &&
             <Menu.Item

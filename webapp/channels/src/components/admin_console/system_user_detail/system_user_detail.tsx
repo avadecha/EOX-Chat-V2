@@ -343,15 +343,15 @@ export class SystemUserDetail extends PureComponent<Props, State> {
                             }
                             footer={
                                 <>
-                                    <button
-                                        className='btn btn-secondary'
-                                        onClick={this.toggleOpenModalResetPassword}
-                                    >
-                                        <FormattedMessage
-                                            id='admin.user_item.resetPwd'
-                                            defaultMessage='Reset Password'
-                                        />
-                                    </button>
+                                    {/*<button*/}
+                                    {/*    className='btn btn-secondary'*/}
+                                    {/*    onClick={this.toggleOpenModalResetPassword}*/}
+                                    {/*>*/}
+                                    {/*    <FormattedMessage*/}
+                                    {/*        id='admin.user_item.resetPwd'*/}
+                                    {/*        defaultMessage='Reset Password'*/}
+                                    {/*    />*/}
+                                    {/*</button>*/}
                                     {this.state.user?.mfa_active && (
                                         <button
                                             className='btn btn-secondary'
