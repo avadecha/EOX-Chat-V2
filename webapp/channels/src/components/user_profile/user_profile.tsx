@@ -111,7 +111,7 @@ export default class UserProfile extends PureComponent<Props> {
 
         let profileImg = '';
         if (user) {
-            profileImg = imageURLForUser(user.username, user.last_picture_update);
+            profileImg = imageURLForUser(user.username, user.is_bot);
         }
 
         let sharedIcon;

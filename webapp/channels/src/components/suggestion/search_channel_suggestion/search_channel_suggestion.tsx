@@ -16,11 +16,11 @@ import {imageURLForUser} from 'utils/utils';
 import {SuggestionContainer} from '../suggestion';
 import type {SuggestionProps} from '../suggestion';
 
-function itemToName(item: Channel, currentUserId: string): {icon: React.ReactElement; name: string; description: string} | null {
+function itemToName(item: Channel, currentUserId: string, is_bot: any = false): {icon: React.ReactElement; name: string; description: string} | null {
     if (item.type === Constants.DM_CHANNEL) {
         const profilePicture = (
             <Avatar
-                url={imageURLForUser(getUserIdFromChannelName(currentUserId, item.name))}
+                url={imageURLForUser(item.display_name, is_bot)}
                 size='sm'
             />
         );

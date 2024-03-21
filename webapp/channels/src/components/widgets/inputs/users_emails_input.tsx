@@ -127,7 +127,7 @@ export default class UsersEmailsInput extends React.PureComponent<Props, State> 
     };
 
     formatOptionLabel = (user: UserProfile | EmailInvite, options: FormatOptionLabelMeta<UserProfile | EmailInvite>) => {
-        const profileImg = imageURLForUser((user as UserProfile).username, (user as UserProfile).last_picture_update);
+        const profileImg = imageURLForUser((user as UserProfile).username, (user as UserProfile).is_bot);
         let guestBadge = null;
         let botBadge = null;
 

@@ -130,7 +130,7 @@ const EditedPostItem = ({post, isCurrent = false, postCurrentVersion, theme, act
         </div>
     ) : null;
 
-    const profileSrc = imageURLForUser(post.user_id);
+    const profileSrc = imageURLForUser(post.props.override_username);
 
     const overwriteName = post.props ? post.props.override_username : '';
     const postHeader = (

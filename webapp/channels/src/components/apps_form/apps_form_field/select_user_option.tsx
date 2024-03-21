@@ -43,7 +43,7 @@ export const SelectUserOption = (props: OptionProps<AppSelectOption>) => {
                 <Avatar
                     size='xxs'
                     username={username}
-                    url={imageURLForUser(username)}
+                    url={imageURLForUser(username, props.data.is_bot)}
                 />
                 <div className='select-option-item-label'>
                     <span className='select-option-main'>

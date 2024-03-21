@@ -72,15 +72,13 @@ function UserAvatar({
     const user = useSelector((state: GlobalState) => selectUser(state, userId)) as UserProfile | undefined;
     const name = useSelector((state: GlobalState) => displayNameGetter(state, true)(user));
 
-    const profilePictureURL = userId ? imageURLForUser(user?.username) : '';
+    const profilePictureURL = userId ? imageURLForUser(user?.username, user?.is_bot) : '';
 
     const overlay = useRef<MMOverlayTrigger>(null);
 
     const hideProfilePopover = () => {
         overlay.current?.hide();
     };
-    console.log("User is ");
-    console.log(user)
     useEffect(() => {
         console.log("Inside use effect")
         // You can add any logic here that should be executed when the component mounts or when userId changes.
@@ -121,7 +119,7 @@ function UserAvatar({
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Avatar
-                        url={imageURLForUser(user?.username, user?.last_picture_update)}
+                        url={imageURLForUser(user?.username, user?.is_bot)}
                         tabIndex={-1}
                         {...props}
                     />

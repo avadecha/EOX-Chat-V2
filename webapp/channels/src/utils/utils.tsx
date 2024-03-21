@@ -1037,8 +1037,11 @@ export function displayFullAndNicknameForUser(user: UserProfile) {
     return displayName;
 }
 
-export function imageURLForUser(userId: UserProfile['username'] = "", lastPictureUpdate = 0) {
-    return Client4.getProfilePictureUrl(userId, lastPictureUpdate);
+export function imageURLForUser(userId: UserProfile['username'] = "", isBot=false) {
+    if (isBot){
+        return Client4.getUsersRoute() + '/' + userId + '/image?_=' + 0;
+    }
+    return Client4.getProfilePictureUrl(userId, 0);
 }
 
 export function defaultImageURLForUser(userId: UserProfile['id']) {

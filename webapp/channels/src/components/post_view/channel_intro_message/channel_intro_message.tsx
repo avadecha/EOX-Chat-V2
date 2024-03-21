@@ -199,7 +199,7 @@ function createGMIntroMessage(channel: Channel, centeredIntro: string, profiles:
 function createDMIntroMessage(channel: Channel, centeredIntro: string, teammate?: UserProfileType, teammateName?: string) {
     const channelIntroId = 'channelIntro';
     if (teammate) {
-        const src = teammate ? Utils.imageURLForUser(teammate.username, teammate.last_picture_update) : '';
+        const src = teammate ? Utils.imageURLForUser(teammate.username, teammate.is_bot) : '';
 
         let pluggableButton = null;
         let setHeaderButton = null;
