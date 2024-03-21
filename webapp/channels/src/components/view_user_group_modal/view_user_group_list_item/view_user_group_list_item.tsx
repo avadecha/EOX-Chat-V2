@@ -50,7 +50,7 @@ const ViewUserGroupListItem = (props: Props) => {
                 <Avatar
                     username={user.username}
                     size={'sm'}
-                    url={Utils.imageURLForUser(user?.username ?? '', user?.is_bot)}
+                    url={Utils.imageURLForUser(user?.id,user?.username ?? '', user?.is_bot)}
                     className={'avatar-post-preview'}
                 />
             </>

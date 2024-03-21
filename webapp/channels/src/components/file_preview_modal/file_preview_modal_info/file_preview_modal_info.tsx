@@ -78,7 +78,7 @@ const FilePreviewModalInfo: React.FC<Props> = (props: Props) => {
                 (props.post && Object.keys(props.post).length > 0) &&
                 <Avatar
                     size='lg'
-                    url={imageURLForUser(user?.username, user?.last_picture_update)}
+                    url={imageURLForUser(user?.id ,user?.username, user?.is_bot)}
                     className='file-preview-modal__avatar'
                 />
             }

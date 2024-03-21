@@ -263,7 +263,7 @@ function SystemUsers(props: Props) {
                             <div className='profilePictureContainer'>
                                 <img
                                     className='profilePicture'
-                                    src={imageURLForUser(info.row.original.username)}
+                                    src={imageURLForUser(info.row.original.id,info.row.original.username, info.row.original.is_bot)}
                                     aria-hidden='true'
                                 />
                             </div>

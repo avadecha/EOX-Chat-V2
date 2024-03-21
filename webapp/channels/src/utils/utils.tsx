@@ -1037,7 +1037,7 @@ export function displayFullAndNicknameForUser(user: UserProfile) {
     return displayName;
 }
 
-export function imageURLForUser(userId: UserProfile['username'] = "", isBot=false) {
+export function imageURLForUser(userId: UserProfile['username'] = "",username: any, isBot=false) {
     if (isBot){
         return Client4.getUsersRoute() + '/' + userId + '/image?_=' + 0;
     }

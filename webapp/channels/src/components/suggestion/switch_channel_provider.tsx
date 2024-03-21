@@ -190,7 +190,7 @@ const SwitchChannelSuggestion = React.forwardRef<HTMLDivElement, Props>((props, 
     } else if (teammate) {
         icon = (
             <ProfilePicture
-                src={Utils.imageURLForUser(teammate.username, teammate.is_bot)}
+                src={Utils.imageURLForUser(teammate.id ,teammate.username, teammate.is_bot)}
                 status={teammate.is_bot ? undefined : status}
                 size='sm'
             />

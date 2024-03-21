@@ -121,7 +121,7 @@ const AtMentionSuggestion = React.forwardRef<HTMLDivElement, SuggestionProps<Ite
                     <Avatar
                         username={item && item.username}
                         size='sm'
-                        url={Utils.imageURLForUser(item.username, item.is_bot)}
+                        url={Utils.imageURLForUser(item.id ,item.username, item.is_bot)}
                     />
                 </span>
                 <StatusIcon status={item && item.status}/>

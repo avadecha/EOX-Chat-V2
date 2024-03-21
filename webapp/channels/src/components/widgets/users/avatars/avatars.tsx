@@ -72,7 +72,7 @@ function UserAvatar({
     const user = useSelector((state: GlobalState) => selectUser(state, userId)) as UserProfile | undefined;
     const name = useSelector((state: GlobalState) => displayNameGetter(state, true)(user));
 
-    const profilePictureURL = userId ? imageURLForUser(user?.username, user?.is_bot) : '';
+    const profilePictureURL = userId ? imageURLForUser(user?.id ,user?.username, user?.is_bot) : '';
 
     const overlay = useRef<MMOverlayTrigger>(null);
 
@@ -119,7 +119,7 @@ function UserAvatar({
                     onClick={(e) => e.stopPropagation()}
                 >
                     <Avatar
-                        url={imageURLForUser(user?.username, user?.is_bot)}
+                        url={imageURLForUser(user?.id ,user?.username, user?.is_bot)}
                         tabIndex={-1}
                         {...props}
                     />

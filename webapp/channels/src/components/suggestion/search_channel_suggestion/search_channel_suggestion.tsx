@@ -20,7 +20,7 @@ function itemToName(item: Channel, currentUserId: string, is_bot: any = false): 
     if (item.type === Constants.DM_CHANNEL) {
         const profilePicture = (
             <Avatar
-                url={imageURLForUser(item.display_name, is_bot)}
+                url={imageURLForUser(currentUserId ,item.display_name, is_bot)}
                 size='sm'
             />
         );

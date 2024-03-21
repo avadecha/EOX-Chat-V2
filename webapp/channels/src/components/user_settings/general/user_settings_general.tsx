@@ -1287,7 +1287,7 @@ export class UserSettingsGeneralTab extends PureComponent<Props, State> {
             } else {
                 submit = this.submitPicture;
                 setDefault = user.last_picture_update > 0 ? this.setDefaultProfilePicture : null;
-                imgSrc = Utils.imageURLForUser(user.username, user.is_bot);
+                imgSrc = Utils.imageURLForUser(user.id ,user.username, user.is_bot);
                 helpText = (
                     <FormattedMessage
                         id='setting_picture.help.profile'

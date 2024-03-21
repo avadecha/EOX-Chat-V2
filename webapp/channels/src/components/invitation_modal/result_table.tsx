@@ -121,7 +121,7 @@ export default function ResultTable(props: Props) {
                             className = 'name';
                             const user = (invitation as InviteUser).user;
                             reactKey = user.id;
-                            const profileImg = imageURLForUser(user.username, user.is_bot);
+                            const profileImg = imageURLForUser(user.id ,user.username, user.is_bot);
                             icon = (
                                 <Avatar
                                     username={user.username}
