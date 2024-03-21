@@ -136,7 +136,7 @@ endif
 	mkdir -p ../server/plugins/$(PLUGIN_ID)
 	rm -rf ../server/plugins/$(PLUGIN_ID)
 	cp -r dist/$(PLUGIN_ID)  ../server/plugins/
-
+	cp dist/${BUNDLE_NAME} ../eoxplugins/
 
 	@echo plugin built at: dist/$(BUNDLE_NAME)
 
