@@ -146,7 +146,7 @@ function createGMIntroMessage(channel: Channel, centeredIntro: string, profiles:
             map((profile) => (
                 <ProfilePicture
                     key={'introprofilepicture' + profile.id}
-                    src={Client4.getProfilePictureUrl(profile.username, 0)}
+                    src={Client4.getProfilePictureUrl(profile.id ,profile.username, profile.is_bot)}
                     size='xl'
                     userId={profile.id}
                     username={profile.username}

@@ -84,7 +84,7 @@ function Row({
         <Item>
             <Avatar
                 size='sm'
-                url={Client4.getProfilePictureUrl(username, lastPictureUpdate)}
+                url={Client4.getProfilePictureUrl(id ,username, false)}
                 username={username}
             />
             <Info>

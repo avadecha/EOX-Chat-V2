@@ -954,15 +954,13 @@ export default class Client4 {
         );
     };
 
-    getProfilePictureUrl = (userId: string, lastPictureUpdate: number) => {
+    getProfilePictureUrl = (userId: string, username: string,  isBot: boolean) => {
         const params: any = {};
 
-        if (lastPictureUpdate) {
-            params._ = lastPictureUpdate;
+        if(isBot){
+            return `${this.getUserRoute(userId)}/image${buildQueryString(params)}`;
         }
-
-        // return `${this.getUserRoute(userId)}/image${buildQueryString(params)}`;
-        return `${this.profilePictureUrl}${userId}`;
+        return `${this.profilePictureUrl}${username}`;
     };
 
     getDefaultProfilePictureUrl = (userId: string) => {

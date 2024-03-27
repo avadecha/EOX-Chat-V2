@@ -92,7 +92,7 @@ const AboutAreaDM = ({channel, dmUser, actions}: Props) => {
             <UserInfoContainer>
                 <UserAvatar>
                     <ProfilePicture
-                        src={Client4.getProfilePictureUrl(dmUser.user.username, dmUser.user.last_picture_update)}
+                        src={Client4.getProfilePictureUrl(dmUser.user.id ,dmUser.user.username, dmUser.user.is_bot)}
                         isBot={dmUser.user.is_bot}
                         status={dmUser.status ? dmUser.status : undefined}
                         username={dmUser.display_name}

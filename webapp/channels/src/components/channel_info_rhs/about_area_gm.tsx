@@ -84,7 +84,7 @@ const AboutAreaGM = ({channel, gmUsers, actions}: Props) => {
                             position={idx}
                         >
                             <ProfilePicture
-                                src={Client4.getProfilePictureUrl(user.username, user.last_picture_update)}
+                                src={Client4.getProfilePictureUrl(user.id ,user.username, user.is_bot)}
                                 size='xl'
                                 userId={user.id}
                                 username={user.username}

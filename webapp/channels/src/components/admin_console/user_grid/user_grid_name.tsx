@@ -19,7 +19,7 @@ const UserGridName = ({
     return (
         <div className='UserGrid_nameRow'>
             <ProfilePicture
-                src={Client4.getProfilePictureUrl(user.username, user.last_picture_update)}
+                src={Client4.getProfilePictureUrl(user.id ,user.username, user.is_bot)}
                 status={user.status}
                 size='md'
             />

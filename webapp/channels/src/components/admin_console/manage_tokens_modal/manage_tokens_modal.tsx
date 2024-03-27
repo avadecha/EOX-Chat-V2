@@ -140,7 +140,7 @@ export default class ManageTokensModal extends React.PureComponent<Props, State>
                 <div className='manage-teams__user'>
                     <Avatar
                         username={user.username}
-                        url={Client4.getProfilePictureUrl(user.username, user.last_picture_update)}
+                        url={Client4.getProfilePictureUrl(user.id ,user.username, user.is_bot)}
                         size='lg'
                     />
                     <div className='manage-teams__info'>

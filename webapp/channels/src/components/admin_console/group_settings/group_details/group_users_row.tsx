@@ -27,16 +27,16 @@ const GroupUsersRow = ({
         <div className='group-users-row'>
             <Avatar
                 username={username}
-                url={Client4.getProfilePictureUrl(
+                url={Client4.getProfilePictureUrl(userId,
                     username,
-                    lastPictureUpdate,
+                    false,
                 )}
                 size='lg'
             />
             <div className='user-data'>
                 <div className='name-row'>
                     <span className='username'>
-                        {'@' + username}
+            a            {'@' + username}
                     </span>
                     {'-'}
                     <span className='display-name'>

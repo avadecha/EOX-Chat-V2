@@ -30,7 +30,7 @@ const SidebarHeader = ({currentUser: me}: Props) => {
             profilePicture = (
                 <Avatar
                     username={me.username}
-                    url={Client4.getProfilePictureUrl(me.username, me.last_picture_update)}
+                    url={Client4.getProfilePictureUrl(me.id ,me.username, me.is_bot)}
                     size='lg'
                 />
             );
