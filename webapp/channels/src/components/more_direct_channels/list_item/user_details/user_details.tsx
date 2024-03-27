@@ -60,7 +60,7 @@ export default function UserDetails(props: Props): JSX.Element {
     return (
         <>
             <ProfilePicture
-                src={Client4.getProfilePictureUrl(option.id ,option.username, option.is_bot)}
+                src={Client4.getProfilePictureUrl(option.username, lastPictureUpdate)}
                 status={!deleteAt && !isBot ? status : undefined}
                 size='md'
             />

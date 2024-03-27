@@ -1041,7 +1041,7 @@ export function imageURLForUser(userId: UserProfile['username'] = "",username: a
     if (isBot){
         return Client4.getUsersRoute() + '/' + userId + '/image?_=' + 0;
     }
-    return Client4.getProfilePictureUrl(userId, username, isBot);
+    return Client4.getProfilePictureUrl(username, 0);
 }
 
 export function defaultImageURLForUser(userId: UserProfile['id']) {

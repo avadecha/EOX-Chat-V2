@@ -126,7 +126,7 @@ export class AddUsersToRoleModal extends React.PureComponent<Props, State> {
                 onMouseMove={() => onMouseMove(option)}
             >
                 <ProfilePicture
-                    src={Client4.getProfilePictureUrl(option.id ,option.username, option.is_bot)}
+                    src={Client4.getProfilePictureUrl(option.username, option.last_picture_update)}
                     size='md'
                 />
                 <div className='more-modal__details'>

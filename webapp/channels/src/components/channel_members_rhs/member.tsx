@@ -116,7 +116,7 @@ interface MMOverlayTrigger extends BaseOverlayTrigger {
 
 const Member = ({className, channel, member, index, totalUsers, editing, actions}: Props) => {
     const overlay = React.createRef<MMOverlayTrigger>();
-    const profileSrc = Client4.getProfilePictureUrl(member.user.id ,member.user.username, member.user.is_bot);
+    const profileSrc = Client4.getProfilePictureUrl(member.user.username, member.user.last_picture_update);
 
     const hideProfilePopover = () => {
         if (overlay.current) {
@@ -155,7 +155,7 @@ const Member = ({className, channel, member, index, totalUsers, editing, actions
                             isBot={member.user.is_bot}
                             userId={member.user.id}
                             username={member.displayName}
-                            src={Client4.getProfilePictureUrl(member.user.id ,member.user.username, member.user.is_bot)}
+                            src={Client4.getProfilePictureUrl(member.user.username, member.user.last_picture_update)}
                         />
                     </Avatar>
                     <UserInfo>

@@ -130,7 +130,7 @@ export default class UserListRowWithError extends React.PureComponent<Props, Sta
                 className='more-modal__row'
             >
                 <ProfilePicture
-                    src={Client4.getProfilePictureUrl(this.props.user.id ,this.props.user.username, this.props.user.is_bot)}
+                    src={Client4.getProfilePictureUrl(this.props.user.username, this.props.user.last_picture_update)}
                     status={status || undefined}
                     size='md'
                 />

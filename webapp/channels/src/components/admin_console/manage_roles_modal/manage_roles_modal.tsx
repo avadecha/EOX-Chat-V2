@@ -300,7 +300,7 @@ export default class ManageRolesModal extends React.PureComponent<Props, State> 
                     <Avatar
                         size='lg'
                         username={user.username}
-                        url={Client4.getProfilePictureUrl(user.id ,user.username, user.is_bot)}
+                        url={Client4.getProfilePictureUrl(user.username, user.last_picture_update)}
                     />
                     <div className='manage-teams__info'>
                         <div className='manage-teams__name'>

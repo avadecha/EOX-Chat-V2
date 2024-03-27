@@ -65,7 +65,7 @@ function PanelBody({
                     username={username}
                     userId={userId}
                     size={'md'}
-                    src={Client4.getProfilePictureUrl(userId,username, false)}
+                    src={Client4.getProfilePictureUrl(username, 0)}
                 />
             </div>
             <div

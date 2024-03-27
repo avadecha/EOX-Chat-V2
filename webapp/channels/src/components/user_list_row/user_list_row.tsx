@@ -112,7 +112,7 @@ const UserListRow = ({user, status, extraInfo = [], actions = [], actionProps, a
             className='more-modal__row'
         >
             <ProfilePicture
-                src={Client4.getProfilePictureUrl(user.id ,user.username, user.is_bot)}
+                src={Client4.getProfilePictureUrl(user.username, user.last_picture_update)}
                 status={statusProp}
                 size='md'
                 userId={user.id}
