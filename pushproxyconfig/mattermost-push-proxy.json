@@ -1,0 +1,46 @@
+{
+    "ListenAddress":":8066",
+    "ThrottlePerSec":300,
+    "ThrottleMemoryStoreSize":50000,
+    "ThrottleVaryByHeader":"X-Forwarded-For",
+    "EnableMetrics": true,
+    "SendTimeoutSec": 30,
+    "ApplePushSettings":[
+        {
+            "Type":"apple",
+            "ApplePushUseDevelopment":true,
+            "ApplePushCertPrivate":"./config/aps_production_priv.pem",
+            "ApplePushCertPassword":"",
+            "ApplePushTopic":"com.eox-bundles.rnbeta"
+        },
+        {
+            "Type":"apple_rnbeta",
+            "ApplePushUseDevelopment": true,
+            "ApplePushCertPrivate":"./config/aps_production_priv.pem",
+            "ApplePushCertPassword":"",
+            "ApplePushTopic":"com.eox-bundles.rnbeta"
+        },
+        {
+            "Type":"apple_rn",
+            "ApplePushUseDevelopment": true,
+            "ApplePushCertPrivate":"./config/aps_production_priv.pem",
+            "ApplePushCertPassword":"",
+            "ApplePushTopic":"com.eox-bundles.rnbeta"
+        }
+
+    ],
+    "AndroidPushSettings":[
+        {
+            "Type":"android",
+            "ServiceFileLocation": "./config/eox-app-firebase-adminsdk-7oyqp-53bb89bc15.json"
+        },
+        {
+            "Type":"android_rn",
+           "ServiceFileLocation": "./config/eox-app-firebase-adminsdk-7oyqp-53bb89bc15.json"
+
+        }
+    ],
+    "EnableConsoleLog": true,
+    "EnableFileLog": true,
+    "LogFileLocation": "logs/proxy.log"
+}

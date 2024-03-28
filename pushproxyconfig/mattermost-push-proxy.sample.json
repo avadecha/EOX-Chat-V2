@@ -1,0 +1,43 @@
+{
+    "ListenAddress":":8066",
+    "ThrottlePerSec":300,
+    "ThrottleMemoryStoreSize":50000,
+    "ThrottleVaryByHeader":"X-Forwarded-For",
+    "EnableMetrics": false,
+    "SendTimeoutSec": 30,
+    "ApplePushSettings":[
+        {
+            "Type":"apple",
+            "ApplePushUseDevelopment":false,
+            "ApplePushCertPrivate":"",
+            "ApplePushCertPassword":"",
+            "ApplePushTopic":"com.mattermost.Mattermost",
+            "AppleAuthKeyFile": "",
+            "AppleAuthKeyID": "",
+            "AppleTeamID": ""
+        },
+        {
+            "Type":"apple_rn",
+            "ApplePushUseDevelopment":false,
+            "ApplePushCertPrivate":"",
+            "ApplePushCertPassword":"",
+            "ApplePushTopic":"com.mattermost.react.native",
+            "AppleAuthKeyFile": "",
+            "AppleAuthKeyID": "",
+            "AppleTeamID": ""
+        }
+    ],
+    "AndroidPushSettings": [
+        {
+            "Type":"android",
+            "ServiceFileLocation":""
+        },
+        {
+            "Type":"android_rn",
+            "ServiceFileLocation":""
+        }
+    ],
+    "EnableConsoleLog": true,
+    "EnableFileLog": false,
+    "LogFileLocation": ""
+}
