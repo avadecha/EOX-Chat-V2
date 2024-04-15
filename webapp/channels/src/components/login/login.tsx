@@ -899,7 +899,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                                     onDismiss={alertBanner.onDismiss ?? dismissAlert}
                                 />
                             )}
-                            {enableBaseLogin && (
+                            {false && (
                                 <form
                                     onSubmit={(event: FormEvent<HTMLFormElement>) => {
                                         preSubmit(event as unknown as React.MouseEvent);

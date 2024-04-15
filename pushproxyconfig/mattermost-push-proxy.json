@@ -9,21 +9,21 @@
         {
             "Type":"apple",
             "ApplePushUseDevelopment":true,
-            "ApplePushCertPrivate":"./config/aps_production_priv.pem",
+            "ApplePushCertPrivate":"/mattermost-push-proxy/config/aps_production_priv.pem",
             "ApplePushCertPassword":"",
             "ApplePushTopic":"com.eox-bundles.rnbeta"
         },
         {
             "Type":"apple_rnbeta",
             "ApplePushUseDevelopment": true,
-            "ApplePushCertPrivate":"./config/aps_production_priv.pem",
+            "ApplePushCertPrivate":"/mattermost-push-proxy/config/aps_production_priv.pem",
             "ApplePushCertPassword":"",
             "ApplePushTopic":"com.eox-bundles.rnbeta"
         },
         {
             "Type":"apple_rn",
             "ApplePushUseDevelopment": true,
-            "ApplePushCertPrivate":"./config/aps_production_priv.pem",
+            "ApplePushCertPrivate":"/mattermost-push-proxy/config/aps_production_priv.pem",
             "ApplePushCertPassword":"",
             "ApplePushTopic":"com.eox-bundles.rnbeta"
         }

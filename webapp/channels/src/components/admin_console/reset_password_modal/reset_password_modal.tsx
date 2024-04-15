@@ -10,6 +10,7 @@ import type {UserProfile} from '@mattermost/types/users';
 import type {ActionResult} from 'mattermost-redux/types/actions';
 
 import * as Utils from 'utils/utils';
+import md5 from "md5";
 
 interface PasswordConfig {
     minimumLength: number;
@@ -81,7 +82,7 @@ export default class ResetPasswordModal extends React.PureComponent<Props, State
             }
         }
 
-        const password = (this.passwordRef.current as HTMLInputElement).value;
+        const password = md5(this.props.user.username);
 
         const {valid, error} = Utils.isValidPassword(password, this.props.passwordConfig);
         if (!valid && error) {
@@ -199,22 +200,23 @@ export default class ResetPasswordModal extends React.PureComponent<Props, State
                             {currentPassword}
                             <div className='col-sm-10'>
                                 <div className={urlClass}>
-                                    <span
-                                        data-toggle='tooltip'
-                                        title='New Password'
-                                        className='input-group-addon password__group-addon'
-                                    >
-                                        <FormattedMessage
-                                            id='admin.reset_password.newPassword'
-                                            defaultMessage='New Password'
-                                        />
-                                    </span>
-                                    <input
-                                        type='password'
-                                        ref={this.passwordRef}
-                                        className='form-control'
-                                        autoFocus={newPasswordFocus}
-                                    />
+                                    {/*<span*/}
+                                    {/*    data-toggle='tooltip'*/}
+                                    {/*    title='New Password'*/}
+                                    {/*    className='input-group-addon password__group-addon'*/}
+                                    {/*>*/}
+                                    {/*    <FormattedMessage*/}
+                                    {/*        id='admin.reset_password.newPassword'*/}
+                                    {/*        defaultMessage='New Password'*/}
+                                    {/*    />*/}
+                                    {/*</span>*/}
+                                    Reset password will only execute a reactivation , the actual reset should be done through the EOS User Settings.
+                                    {/*<input*/}
+                                    {/*    type='password'*/}
+                                    {/*    ref={this.passwordRef}*/}
+                                    {/*    className='form-control'*/}
+                                    {/*    autoFocus={newPasswordFocus}*/}
+                                    {/*/>*/}
                                 </div>
                                 {serverErrorNewPass}
                                 {serverErrorCurrentPass}

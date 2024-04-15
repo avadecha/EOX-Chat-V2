@@ -7,7 +7,7 @@ SET @preparedStatement = (SELECT IF(
         AND column_name = 'Archived'
     ) > 0,
     'SELECT 1',
-    'ALTER TABLE FileInfo ADD COLUMN Archived boolean NOT NULL DEFAULT false;'
+    'ALTER TABLE FileInfo ADD COLUMN Archived boolean NOT NULL DEFAULT false, ALGORITHM=INPLACE;'
 ));
 
 PREPARE alterIfExists FROM @preparedStatement;

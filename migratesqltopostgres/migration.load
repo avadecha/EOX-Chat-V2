@@ -1,19 +1,21 @@
 LOAD DATABASE
-     FROM      mysql://root:password@172.17.0.1:3306/mattermost
+     FROM      mysql://apiuser:Apipasswd321!@localhost:3001/mattermost
      INTO      postgres://postgres:postgres@localhost:5432/mattermost
 
 WITH data only,
      workers = 8, concurrency = 1,
      multiple readers per thread, rows per range = 50000,
      create no tables, create no indexes,
+     prefetch rows = 1000,
+     batch rows = 500,
      preserve index names
 SET PostgreSQL PARAMETERS
      maintenance_work_mem to '128MB',
      work_mem to '12MB'
 
 SET MySQL PARAMETERS
-      net_read_timeout  = '120',
-      net_write_timeout = '120'
+      net_read_timeout  = '1800',
+      net_write_timeout = '1800'
 
 CAST column Channels.Type to "channel_type" drop typemod,
      column Teams.Type to "team_type" drop typemod,
