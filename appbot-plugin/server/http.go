@@ -58,7 +58,7 @@ type CommentAttachments struct {
 }
 
 const (
-	eoxAPIUrl = "http://api-service:80/"
+	eoxAPIUrl = "https://staging3.eoxvantage.com:9080/"
 )
 
 func (p *Plugin) InitAPI() *mux.Router {
