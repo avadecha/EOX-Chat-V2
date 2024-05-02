@@ -133,9 +133,10 @@ func (p *Plugin) handleAppBot(w http.ResponseWriter, r *http.Request) {
 		p.API.LogError("failed to connect to master db" + err.Error())
 		return
 	}
-	checkTableExists, _ := db.Query(`SELECT table_name
+	_, checkTableExists := db.Query(`SELECT table_name
 FROM information_schema.tables
 WHERE table_name LIKE 'postfilehistory';`)
+
 	if checkTableExists != nil {
 		_, tableCreationErr := db.Exec(`CREATE TABLE IF NOT EXISTS PostFileHistory (
             Id SERIAL PRIMARY KEY,
