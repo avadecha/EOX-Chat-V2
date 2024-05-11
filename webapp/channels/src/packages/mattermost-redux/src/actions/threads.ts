@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {uniq} from 'lodash';
+import uniq from 'lodash/uniq';
 import {batchActions} from 'redux-batched-actions';
 
 import type {Post} from '@mattermost/types/posts';
@@ -424,13 +424,16 @@ export function decrementThreadCounts(post: ExtendedPost): ActionFunc {
         const channel = getChannel(state, post.channel_id);
         const teamId = channel?.team_id || getCurrentTeamId(state);
 
-        dispatch({
-            type: ThreadTypes.DECREMENT_THREAD_COUNTS,
-            teamId,
-            replies: thread.unread_replies,
-            mentions: thread.unread_mentions,
-            channelType: channel.type,
-        });
+        if (channel) {
+            dispatch({
+                type: ThreadTypes.DECREMENT_THREAD_COUNTS,
+                teamId,
+                replies: thread.unread_replies,
+                mentions: thread.unread_mentions,
+                channelType: channel.type,
+            });
+        }
+
         return {data: true};
     };
 }

@@ -1,7 +1,7 @@
 // Copyright (c) 2015-present Mattermost, Inc. All Rights Reserved.
 // See LICENSE.txt for license information.
 
-import {isEmpty} from 'lodash';
+import isEmpty from 'lodash/isEmpty';
 import React, {memo, useCallback, useEffect} from 'react';
 import type {PropsWithChildren} from 'react';
 import {FormattedMessage, useIntl} from 'react-intl';
@@ -205,8 +205,8 @@ const ThreadList = ({
                                 onClick={handleRead}
                             >
                                 <FormattedMessage
-                                    id='threading.filters.allThreads'
-                                    defaultMessage='All your threads'
+                                    id='globalThreads.heading'
+                                    defaultMessage='Followed threads'
                                 />
                             </Button>
                         </div>
