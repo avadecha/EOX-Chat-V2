@@ -83,25 +83,25 @@ const MenuStartTrial = (props: Props): JSX.Element | null => {
             role='menuitem'
             id={props.id}
         >
-            <FreeVersionBadge>{'FREE EDITION'}</FreeVersionBadge>
-            {isE0 &&
-                <div className='start_trial_content'>
-                    {formatMessage({
-                        id: 'navbar_dropdown.versionTextE0',
-                        defaultMessage: 'This is the free edition of Mattermost, ideal for evaluation and small teams.',
-                    })}
-                </div>}
-            {!isE0 &&
-                <div className='start_trial_content'>
-                    {formatMessage({
-                        id: 'navbar_dropdown.versionTextTeamEdition',
-                        defaultMessage: 'This is the free open source edition of Mattermost, ideal for evaluation and small teams.',
-                    })}
-                </div>}
-            {showTrialButton &&
-                <button onClick={openLearnMoreTrialModal}>
-                    {formatMessage({id: 'navbar_dropdown.startAnEnterpriseTrial', defaultMessage: 'Start an Enterprise trial'})}
-                </button>}
+            {/*<FreeVersionBadge>{'FREE EDITION'}</FreeVersionBadge>*/}
+            {/*{isE0 &&*/}
+            {/*    <div className='start_trial_content'>*/}
+            {/*        {formatMessage({*/}
+            {/*            id: 'navbar_dropdown.versionTextE0',*/}
+            {/*            defaultMessage: 'This is the free edition of Mattermost, ideal for evaluation and small teams.',*/}
+            {/*        })}*/}
+            {/*    </div>}*/}
+            {/*{!isE0 &&*/}
+            {/*    <div className='start_trial_content'>*/}
+            {/*        {formatMessage({*/}
+            {/*            id: 'navbar_dropdown.versionTextTeamEdition',*/}
+            {/*            defaultMessage: 'This is the free open source edition of Mattermost, ideal for evaluation and small teams.',*/}
+            {/*        })}*/}
+            {/*    </div>}*/}
+            {/*{showTrialButton &&*/}
+            {/*    <button onClick={openLearnMoreTrialModal}>*/}
+            {/*        {formatMessage({id: 'navbar_dropdown.startAnEnterpriseTrial', defaultMessage: 'Start an Enterprise trial'})}*/}
+            {/*    </button>}*/}
         </li>
     );
 };
