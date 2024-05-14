@@ -27,36 +27,36 @@ const Header = ({alternateLink, backButtonURL, onBackButtonClick}: HeaderProps) 
     let freeBanner = null;
 
     let title: React.ReactNode = SiteName;
-    if (title === 'Mattermost') {
-        if (freeBanner) {
-            title = '';
-        } else {
-            title = <Logo/>;
-        }
-    }
+    // if (title === 'Mattermost') {
+    //     if (freeBanner) {
+    //         title = '';
+    //     } else {
+    //         title = <Logo/>;
+    //     }
+    // }
 
     return (
         <div className='hfroute-header'>
             <div className='header-main'>
                 <div>
-                    {freeBanner &&
-                        <Link
-                            className='header-logo-link'
-                            to='/'
-                            aria-label={ariaLabel}
-                        >
-                            {freeBanner}
-                        </Link>
-                    }
-                    {title &&
-                        <Link
-                            className='header-logo-link'
-                            to='/'
-                            aria-label={ariaLabel}
-                        >
-                            {title}
-                        </Link>
-                    }
+                    {/*{freeBanner &&*/}
+                    {/*    <Link*/}
+                    {/*        className='header-logo-link'*/}
+                    {/*        to='/'*/}
+                    {/*        aria-label={ariaLabel}*/}
+                    {/*    >*/}
+                    {/*        {freeBanner}*/}
+                    {/*    </Link>*/}
+                    {/*}*/}
+                    {/*{title &&*/}
+                    {/*    <Link*/}
+                    {/*        className='header-logo-link'*/}
+                    {/*        to='/'*/}
+                    {/*        aria-label={ariaLabel}*/}
+                    {/*    >*/}
+                    {/*        {title}*/}
+                    {/*    </Link>*/}
+                    {/*}*/}
                 </div>
                 {alternateLink}
             </div>
