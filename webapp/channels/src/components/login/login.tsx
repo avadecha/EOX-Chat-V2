@@ -899,7 +899,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                                     onDismiss={alertBanner.onDismiss ?? dismissAlert}
                                 />
                             )}
-                            {false && (
+                            {/*{false && (*/}
                                 <form
                                     onSubmit={(event: FormEvent<HTMLFormElement>) => {
                                         preSubmit(event as unknown as React.MouseEvent);
@@ -939,7 +939,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                                         />
                                     </div>
                                 </form>
-                            )}
+                            {/*)}*/}
                             {enableBaseLogin && enableExternalSignup && (
                                 <div className='login-body-card-form-divider'>
                                     <span className='login-body-card-form-divider-label'>
