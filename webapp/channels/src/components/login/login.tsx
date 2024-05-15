@@ -940,6 +940,7 @@ const Login = ({onCustomizeHeader}: LoginProps) => {
                                     </div>
                                 </form>
                             {/*)}*/}
+                            {/*#TODO Comment the above for prod*/}
                             {enableBaseLogin && enableExternalSignup && (
                                 <div className='login-body-card-form-divider'>
                                     <span className='login-body-card-form-divider-label'>
