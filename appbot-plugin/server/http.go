@@ -217,7 +217,7 @@ WHERE table_name LIKE 'postfilehistory';`)
 		fmt.Println(uff)
 		re := regexp.MustCompile("@(\\w+)?") // Reg Expression to match @.*
 		fmt.Println(re)
-		test := re.FindAllString(l.MessageBody, -1) // Check regExp in the MessageBody
+		test := re.FindAllString(l.MessageBody+uff, -1) // Check regExp in the MessageBody
 		fmt.Println("----FINAL TO LIST---", test)
 		for i := range test {
 			p.CreateMessage(test[i], botUserId, l.Title, l.UrlLink, l.Identifier, l.CommentId, l.BotName, finalMessageBody, fromUser, l.MessageFrom, db, l.FileIds)
